@@ -19,7 +19,20 @@
 </head>
 
 <body>
-    <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup='{}'>
+    <video id="my-video" class="video-js" controls preload="auto" data-setup='{
+      "controlBar": {
+        "volumePanel": {
+          "inline": false
+        },
+        "fullscreenToggle": true,
+        "progressControl": false,
+        "remainingTimeDisplay": false,
+        "playToggle": false,
+        "currentTimeDisplay": false,
+        "durationDisplay": false,
+        "muteToggle": false
+      }
+    }' id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup='{}'>
         <source src="https://www.youtube.com/watch?v=mtvKGwJoE8A" type='video/youtube'>
     </video>
     <script>
