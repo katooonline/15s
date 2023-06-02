@@ -21,23 +21,24 @@
     </style>
 </head>
 <body>
-  <video id="my-video" class="video-js" controls preload="auto" autoplay data-setup='{
-      "controlBar": {
-        "volumePanel": {
-          "inline": false
-        },
-        "fullscreenToggle": true,
-        "progressControl": false,
-        "remainingTimeDisplay": false,
-        "playToggle": false,
-        "currentTimeDisplay": false,
-        "durationDisplay": false,
-        "muteToggle": false
-      }
-    }' id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup='{}'>
-        <source src="https://www.youtube.com/watch?v=mtvKGwJoE8A" type='video/youtube'>
-    </video>
+  <video id="my-video" class="video-js vjs-default-skin" 
+         width="640" height="264"
+         data-setup='{ 
+            "techOrder": ["youtube"], 
+            "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=mtvKGwJoE8A"}], 
+            "controlBar": {
+                "volumePanel": { "inline": false }, 
+                "fullscreenToggle": false, 
+                "progressControl": false, 
+                "remainingTimeDisplay": false, 
+                "playToggle": false, 
+                "currentTimeDisplay": false, 
+                "durationDisplay": false
+            } 
+         }'>
+  </video>
 
   <script src="script.js"></script>
 </body>
 </html>
+
