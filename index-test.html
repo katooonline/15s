@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://vjs.zencdn.net/8.0/video-js.min.css" rel="stylesheet">
+  <script src="https://vjs.zencdn.net/8.0/video.min.js"></script>
+  <script src="https://unpkg.com/videojs-youtube@2/dist/Youtube.min.js"></script>
+  <style>
+    /* ここに必要な追加のCSSスタイルを追加します */
+  </style>
+</head>
+<body>
+  <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="640"
+    height="264"
+    data-setup='{}'>
+    <source src="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" type="video/youtube">
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+  </video>
+
+  <script src="yourScript.js"></script>
+</body>
+</html>
