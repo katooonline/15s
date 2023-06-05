@@ -23,12 +23,13 @@
     }
     #mute-button {
       position: absolute;
-      top: 10px; /* adjust position as needed */
-      right: 10px; /* adjust position as needed */
+      top: 60%; /* adjust position as needed */
+      left: 50%; /* adjust position as needed */
+      transform: translate(-50%, -50%);
       width: 50px; /* adjust size as needed */
       height: 50px; /* adjust size as needed */
       border: none;
-      background: url('mute_button.svg') no-repeat center;
+      background: url('unmute_button.svg') no-repeat center;
       background-size: contain;
       z-index: 2;
       display: none;
@@ -80,10 +81,13 @@
       document.getElementById('play-button').style.display = 'none';
     }
     function toggleMute() {
+      var muteButton = document.getElementById('mute-button');
       if (player.isMuted()) {
         player.unMute();
+        muteButton.style.backgroundImage = "url('unmute_button.svg')";
       } else {
         player.mute();
+        muteButton.style.backgroundImage = "url('mute_button.svg')";
       }
       resetHideTimeout();
     }
