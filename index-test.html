@@ -16,8 +16,6 @@
       border: none;
       background-size: contain;
       z-index: 2;
-      opacity: 1;
-      transition: opacity 1s ease-out;
     }
 
     #fullscreen-button {
@@ -35,7 +33,7 @@
     }
 
     .hide {
-      opacity: 0;
+      display: none;
     }
   </style>
 </head>
@@ -121,11 +119,11 @@
     }
 
     function showButton(button) {
-      button.classList.remove('hide');
+      button.style.display = 'block';
     }
 
     function hideButton(button) {
-      button.classList.add('hide');
+      button.style.display = 'none';
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
