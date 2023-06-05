@@ -2,12 +2,17 @@
 <html>
 <head>
   <style>
-    #player {
+    #overlay, #player {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+    }
+
+    #overlay {
+      background-color: rgba(255, 255, 255, 0.0); /* Fully transparent white */
+      z-index: 1; /* Appears above the player, but beneath buttons */
     }
 
     #fullscreen-button, #mute-button, #play-button {
@@ -30,7 +35,7 @@
       left: 80px;
       width: 60px;
       height: 60px;
-      background: url('unmute_button.svg') no-repeat center; /* default is unmute */
+      background: url('unmute_button.svg') no-repeat center;
     }
 
     #play-button {
@@ -39,7 +44,7 @@
       transform: translate(-50%, -50%);
       width: 150px;
       height: 150px;
-      background: url('play_button.svg') no-repeat center; 
+      background: url('play_button.svg') no-repeat center;
     }
 
     .hide {
@@ -49,6 +54,7 @@
 </head>
 <body>
   <div id="player"></div>
+  <div id="overlay"></div>
   <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
   <button id="mute-button" onclick="toggleMute()"></button>
   <button id="play-button" onclick="startVideo()"></button>
@@ -58,6 +64,7 @@
     var fullscreenButton = document.getElementById('fullscreen-button');
     var muteButton = document.getElementById('mute-button');
     var playButton = document.getElementById('play-button');
+    var overlay = document.getElementById('overlay');
     var buttonTimer;
 
     function onYouTubeIframeAPIReady() {
@@ -89,15 +96,16 @@
       muteButton.addEventListener('click', toggleMute);
       playButton.addEventListener('click', startVideo);
 
-      showButton(fullscreenButton);
-      showButton(muteButton);
-      showButton(playButton);
+      overlay.addEventListener('mousemove', resetButtonTimer);
+
       startButtonTimer();
     }
 
     function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        hideButton(playButton);
+      if (event.data === YT.PlayerState.PLAYING) {
+        playButton.style.display = 'none';
+      } else {
+        playButton.style.display = 'block';
       }
     }
 
@@ -128,20 +136,11 @@
       player.playVideo();
     }
 
-    document.addEventListener('mousemove', function(e) {
-      if (e.target == player.getIframe()) {
-        resetButtonTimer();
-      }
-    });
-
     function startButtonTimer() {
       clearTimeout(buttonTimer);
       buttonTimer = setTimeout(function() {
         hideButton(fullscreenButton);
         hideButton(muteButton);
-        if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
-          hideButton(playButton);
-        }
       }, 3000);
     }
 
@@ -149,9 +148,6 @@
       clearTimeout(buttonTimer);
       showButton(fullscreenButton);
       showButton(muteButton);
-      if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
-        showButton(playButton);
-      }
       startButtonTimer();
     }
 
