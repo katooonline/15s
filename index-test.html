@@ -10,7 +10,7 @@
       overflow: hidden;
     }
 
-    #player, #cover-image, #play-button, #title-image {
+    #player, #cover-image {
       position: absolute;
       top: 0;
       left: 0;
@@ -30,9 +30,16 @@
     }
 
     #play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
       z-index: 2;
+      width: 300px;
+      height: 300px;
+      margin-top: -150px;
+      margin-left: -150px;
       background: url('play_button.svg') no-repeat center;
-      background-size: 10%; /* Adjust this value to change the play button size */
+      background-size: contain;
       transition: transform 0.2s;
     }
 
