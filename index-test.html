@@ -12,7 +12,6 @@
 
     #fullscreen-button, #mute-button, #play-button {
       position: absolute;
-      bottom: 10px;
       border: none;
       background-size: contain;
       z-index: 2;
@@ -34,7 +33,8 @@
 
     #play-button {
       left: 50%;
-      transform: translateX(-50%);
+      top: 50%;
+      transform: translate(-50%, -50%);
       width: 150px;
       height: 150px;
       background: url('play_button.svg') no-repeat center; 
@@ -127,9 +127,7 @@
     }
 
     document.addEventListener('mousemove', function() {
-      if (document.querySelector(':hover') !== player.getIframe()) {
-        resetButtonTimer();
-      }
+      resetButtonTimer();
     });
 
     document.addEventListener('mousedown', resetButtonTimer);
