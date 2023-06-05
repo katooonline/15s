@@ -2,44 +2,76 @@
 <html>
 <head>
   <style>
-  #player {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  #play-button {
-    display: block;
-    width: 150px;
-    height: 150px;
-    border: none;
-    background: url('play_button.svg') no-repeat center;
-    background-size: contain;
-    z-index: 2;
-  }
-  #fullscreen-button {
-    display: block;
-    width: 60px;
-    height: 60px;
-    border: none;
-    background: url('fullscreen_button.svg') no-repeat center;
-    background-size: contain;
-    z-index: 2;
-  }
-</style>
+    #player {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('random.jpg');
+      background-size: cover;
+      z-index: 1;
+    }
+
+    #play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      border: none;
+      background: url('play_button.svg') no-repeat center;
+      background-size: contain;
+      z-index: 2;
+      display: block;
+    }
+
+    #fullscreen-button {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      width: 60px;
+      height: 60px;
+      border: none;
+      background: url('fullscreen_button.svg') no-repeat center;
+      background-size: contain;
+      z-index: 2;
+      display: block;
+    }
+
+    #mute-button {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 60px;
+      height: 60px;
+      border: none;
+      background: url('mute_button.svg') no-repeat center;
+      background-size: contain;
+      z-index: 2;
+      display: block;
+    }
+  </style>
 </head>
 <body>
   <div id="player"></div>
+  <div id="cover"></div>
   <button id="play-button" onclick="playVideo()">►</button>
   <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
   <button id="mute-button" onclick="toggleMute()"></button>
-  </div>
 
   <script>
     var player;
-    var hideTimeout;
-    var mouseMoved = false;
+
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
         height: '390',
@@ -56,53 +88,36 @@
           showinfo: 0
         },
         events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
+          'onReady': onPlayerReady
         }
       });
     }
+
     function onPlayerReady(event) {
-      document.addEventListener('mousemove', function() {
-        mouseMoved = true;
+      document.getElementById('play-button').addEventListener('click', function() {
+        event.target.playVideo();
+        hideCover();
+        hideButton('play-button');
       });
-      document.getElementById('button-container').addEventListener('click', function() {
-        if (!mouseMoved) {
-          event.target.playVideo();
-          hideButtons();
-        }
+
+      document.getElementById('fullscreen-button').addEventListener('click', function() {
+        toggleFullscreen();
       });
-      document.getElementById('button-container').addEventListener('mouseover', function() {
-        showButtons();
+
+      document.getElementById('mute-button').addEventListener('click', function() {
+        toggleMute();
       });
-      document.addEventListener('mouseout', function() {
-        if (!mouseMoved) {
-          hideButtons();
-        }
-      });
-      document.addEventListener('keydown', function(event) {
-        if (event.key === ' ') {
-          if (player.getPlayerState() === 1) {
-            player.pauseVideo();
-            showButtons();
-          } else {
-            event.target.playVideo();
-            hideButtons();
-          }
-        }
-      });
-      document.getElementById('fullscreen-button').style.display = 'block';
-      resetHideTimeout();
+
+      showButton('play-button');
+      showButton('fullscreen-button');
+      showButton('mute-button');
     }
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.PAUSED) {
-        hideButtons();
-        document.getElementById('cover').style.display = 'none';
-      }
-    }
+
     function playVideo() {
       player.playVideo();
-      hideButtons();
+      hideButton('play-button');
     }
+
     function toggleFullscreen() {
       var playerElement = document.getElementById('player');
       if (playerElement.requestFullscreen) {
@@ -115,21 +130,27 @@
         playerElement.msRequestFullscreen();
       }
     }
-    function showButtons() {
-      document.getElementById('play-button').style.display = 'block';
-      document.getElementById('fullscreen-button').style.display = 'block';
-      resetHideTimeout();
+
+    function toggleMute() {
+      if (player.isMuted()) {
+        player.unMute();
+        document.getElementById('mute-button').style.backgroundImage = "url('mute_button.svg')";
+      } else {
+        player.mute();
+        document.getElementById('mute-button').style.backgroundImage = "url('unmute_button.svg')";
+      }
     }
-    function hideButtons() {
-      document.getElementById('play-button').style.display = 'none';
-      document.getElementById('fullscreen-button').style.display = 'none';
-      clearTimeout(hideTimeout);
+
+    function hideCover() {
+      document.getElementById('cover').style.display = 'none';
     }
-    function resetHideTimeout() {
-      clearTimeout(hideTimeout);
-      hideTimeout = setTimeout(function() {
-        hideButtons();
-      }, 3000);
+
+    function showButton(buttonId) {
+      document.getElementById(buttonId).style.display = 'block';
+    }
+
+    function hideButton(buttonId) {
+      document.getElementById(buttonId).style.display = 'none';
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
