@@ -103,12 +103,11 @@
       }
     }
 
-    document.addEventListener('mousemove', function() {
-      clearTimeout(buttonTimer);
-      showButton(fullscreenButton);
-      showButton(muteButton);
-      startButtonTimer();
-    });
+    // Listen for any user interaction events
+    document.addEventListener('mousemove', resetButtonTimer);
+    document.addEventListener('mousedown', resetButtonTimer);
+    document.addEventListener('keydown', resetButtonTimer);
+    document.addEventListener('scroll', resetButtonTimer);
 
     function startButtonTimer() {
       clearTimeout(buttonTimer);
@@ -116,6 +115,13 @@
         hideButton(fullscreenButton);
         hideButton(muteButton);
       }, 3000);
+    }
+
+    function resetButtonTimer() {
+      clearTimeout(buttonTimer);
+      showButton(fullscreenButton);
+      showButton(muteButton);
+      startButtonTimer();
     }
 
     function showButton(button) {
