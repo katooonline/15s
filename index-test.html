@@ -22,6 +22,27 @@
       background: url('play_button.svg') no-repeat center;
       background-size: contain;
       z-index: 3;
+      transition: transform 0.3s ease;
+    }
+
+    #play-button:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    #play-button:active {
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    #title-image {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      width: 200px; // Change as needed
+      height: 100px; // Change as needed
+      border: none;
+      background: url('title_image.svg') no-repeat center;
+      background-size: contain;
+      z-index: 3;
     }
 
     .hide {
@@ -33,11 +54,13 @@
   <div id="player" class="hide"></div>
   <img id="cover-image" src="random.jpg">
   <button id="play-button" onclick="startVideo()"></button>
+  <button id="title-image"></button>
 
   <script>
     var player;
     var playButton = document.getElementById('play-button');
     var coverImage = document.getElementById('cover-image');
+    var titleImage = document.getElementById('title-image');
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -70,6 +93,7 @@
     function onPlayerStateChange(event) {
       if (event.data == YT.PlayerState.PLAYING) {
         playButton.classList.add('hide');
+        titleImage.classList.add('hide');
       }
     }
 
