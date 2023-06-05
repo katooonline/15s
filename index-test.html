@@ -28,35 +28,42 @@
 
   <script>
     var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        videoId: 'mtvKGwJoE8A',
-        playerVars: {
-          autoplay: 0, // Autoplay the video
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          iv_load_policy: 3,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0
-        },
-        events: {
-          'onReady': onPlayerReady
-        }
-      });
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '390',
+    width: '640',
+    videoId: 'mtvKGwJoE8A',
+    playerVars: {
+      autoplay: 1, // Autoplay the video
+      controls: 0,
+      disablekb: 1,
+      fs: 0,
+      iv_load_policy: 3,
+      modestbranding: 1,
+      rel: 0,
+      showinfo: 0
+    },
+    events: {
+      'onReady': onPlayerReady,
+      'onPlaybackQualityChange': onPlaybackQualityChange
     }
-    function onPlayerReady(event) {
-      document.getElementById('play-button').addEventListener('click', function() {
-        event.target.playVideo();
-      });
-    }
-    function playVideo() {
-      player.playVideo();
-      document.getElementById('play-button').style.display = 'none';
-    }
+  });
+}
+function onPlayerReady(event) {
+  document.getElementById('play-button').addEventListener('click', function() {
+    event.target.playVideo();
+  });
+}
+function playVideo() {
+  player.playVideo();
+  document.getElementById('play-button').style.display = 'none';
+}
+function onPlaybackQualityChange(event) {
+  var quality = event.target.getPlaybackQuality();
+  if (quality !== 'highres') {
+    event.target.setPlaybackQuality('highres');
+  }
+}
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
