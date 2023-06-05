@@ -34,16 +34,13 @@
     }
 
     #title-image {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: auto; // Auto for aspect ratio
-  height: 100px; // Adjust as necessary
-  border: none;
-  background: url('title_image.svg') no-repeat right bottom;
-  background-size: contain;
-  z-index: 3;
-}
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: auto; // Adjust as necessary
+      height: 100px; // Adjust as necessary
+      z-index: 3;
+    }
 
     .hide {
       display: none;
@@ -54,7 +51,7 @@
   <div id="player" class="hide"></div>
   <img id="cover-image" src="random.jpg">
   <button id="play-button" onclick="startVideo()"></button>
-  <button id="title-image"></button>
+  <img id="title-image" src="title_image.svg"> <!-- SVG is now directly embedded -->
 
   <script>
     var player;
