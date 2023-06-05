@@ -61,6 +61,7 @@
   <script>
     var player;
     var playButton = document.getElementById('play-button');
+    var coverImage = document.getElementById('cover-image');
     var titleImage = document.getElementById('title-image');
 
     function onYouTubeIframeAPIReady() {
@@ -87,6 +88,7 @@
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.PLAYING) {
         playButton.style.display = "none";
+        coverImage.style.display = "none";
         titleImage.style.display = "none";
       }
     }
