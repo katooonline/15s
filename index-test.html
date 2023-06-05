@@ -33,9 +33,10 @@
     }
 
     #play-button {
-      left: 150px;
-      width: 60px;
-      height: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 150px;
       background: url('play_button.svg') no-repeat center; 
     }
 
@@ -125,8 +126,12 @@
       player.playVideo();
     }
 
-    // Listen for any user interaction events
-    document.addEventListener('mousemove', resetButtonTimer);
+    document.addEventListener('mousemove', function() {
+      if (document.querySelector(':hover') !== player.getIframe()) {
+        resetButtonTimer();
+      }
+    });
+
     document.addEventListener('mousedown', resetButtonTimer);
     document.addEventListener('keydown', resetButtonTimer);
     document.addEventListener('scroll', resetButtonTimer);
@@ -136,7 +141,9 @@
       buttonTimer = setTimeout(function() {
         hideButton(fullscreenButton);
         hideButton(muteButton);
-        hideButton(playButton);
+        if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+          hideButton(playButton);
+        }
       }, 3000);
     }
 
