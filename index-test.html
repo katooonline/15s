@@ -26,8 +26,8 @@
       top: 60%; /* adjust position as needed */
       left: 50%; /* adjust position as needed */
       transform: translate(-50%, -50%);
-      width: 50px; /* adjust size as needed */
-      height: 50px; /* adjust size as needed */
+      width: 75px; /* adjust size as needed */
+      height: 75px; /* adjust size as needed */
       border: none;
       background: url('unmute_button.svg') no-repeat center;
       background-size: contain;
@@ -69,10 +69,14 @@
       document.getElementById('play-button').addEventListener('click', function() {
         event.target.playVideo();
       });
+      var muteButton = document.getElementById('mute-button');
+      muteButton.style.display = 'block';
+      document.getElementById('player').addEventListener('mouseenter', showMuteButton);
+      document.getElementById('player').addEventListener('touchstart', showMuteButton);
+      resetHideTimeout();
     }
     function onPlayerStateChange(event) {
       if (event.data == YT.PlayerState.PLAYING) {
-        document.getElementById('mute-button').style.display = 'block';
         resetHideTimeout();
       }
     }
@@ -89,6 +93,10 @@
         player.mute();
         muteButton.style.backgroundImage = "url('mute_button.svg')";
       }
+      resetHideTimeout();
+    }
+    function showMuteButton() {
+      document.getElementById('mute-button').style.display = 'block';
       resetHideTimeout();
     }
     function resetHideTimeout() {
