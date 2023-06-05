@@ -4,12 +4,15 @@
   <style>
     #player,
     #cover-image {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('random.jpg');
+  background-size: cover;
+  background-position: center;
+}
 
     #play-button {
       position: absolute;
@@ -49,7 +52,7 @@
 </head>
 <body>
   <div id="player" class="hide"></div>
-  <img id="cover-image" src="random.jpg">
+  <div id="cover-image"></div>
   <button id="play-button" onclick="startVideo()"></button>
   <img id="title-image" src="title_image.svg"> <!-- SVG is now directly embedded -->
 
