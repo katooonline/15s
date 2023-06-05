@@ -2,64 +2,68 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="icon" href="/favicon.ico" />
-  <title>15s.mov</title>
   <style>
-    #player,
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #player, #cover-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+    }
+
     #cover-image {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('random.jpg');
-  background-size: cover;
-  background-position: center;
-}
+      z-index: 1;
+      background: url('random.jpg') no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
 
     #play-button {
       position: absolute;
-      left: 50%;
       top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
-      width: 200px;
-      height: 200px;
-      border: none;
+      z-index: 2;
+      width: 250px;
+      height: 250px;
       background: url('play_button.svg') no-repeat center;
       background-size: contain;
-      z-index: 3;
-      transition: transform 0.3s ease;
+      transition: transform 0.2s;
     }
 
     #play-button:hover {
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    #play-button:active {
-      transform: translate(-50%, -50%) scale(0.95);
+      cursor: pointer;
+      transform: translate(-50%, -50%) scale(1.05);
     }
 
     #title-image {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 40%; // Adjust as necessary
-  height: auto; // Adjust as necessary
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 25%; // Adjust as necessary
+      height: auto; // Adjust as necessary
       background: url('title_image.svg') no-repeat left;
       background-size: contain;
-  z-index: 3;
-}
-
-    .hide {
-      display: none;
+      z-index: 3;
     }
   </style>
 </head>
 <body>
-  <div id="player" class="hide"></div>
+  <div id="player"></div>
   <div id="cover-image"></div>
-  <button id="play-button" onclick="startVideo()"></button>
-  <img id="title-image" src="title_image.svg"> <!-- SVG is now directly embedded -->
+  <div id="play-button" onclick="startVideo()"></div>
+  <div id="title-image"></div>
 
   <script>
     var player;
@@ -78,45 +82,28 @@
           disablekb: 1,
           fs: 0,
           iv_load_policy: 3,
-          modestbranding: 0, // Display the YouTube logo
+          modestbranding: 1,
           rel: 0,
-          showinfo: 1 // Display video title
+          showinfo: 0
         },
         events: {
-          'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
         }
       });
     }
 
-    function onPlayerReady(event) {
-      document.getElementById('play-button').addEventListener('click', function() {
-        startVideo();
-      });
-    }
-
     function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        playButton.classList.add('hide');
-        titleImage.classList.add('hide');
+      if (event.data === YT.PlayerState.PLAYING) {
+        playButton.style.display = "none";
+        coverImage.style.display = "none";
+        titleImage.style.display = "none";
       }
     }
 
     function startVideo() {
-      coverImage.style.display = "none";
-      player.getIframe().style.display = "block";
       player.playVideo();
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-3LJ8BTZGZV');
-    </script>
 </body>
 </html>
