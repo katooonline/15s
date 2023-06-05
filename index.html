@@ -1,51 +1,111 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8" />
-    <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
-    <style>
-        .video-js {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-        .video-js .vjs-loading-spinner {
-  display: none;
+  <style>
+    #player,
+    #cover-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('random.jpg');
+  background-size: cover;
+  background-position: center;
 }
-    </style>
-    <title>15s</title>
-</head>
 
+    #play-button {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      border: none;
+      background: url('play_button.svg') no-repeat center;
+      background-size: contain;
+      z-index: 3;
+      transition: transform 0.3s ease;
+    }
+
+    #play-button:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    #play-button:active {
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    #title-image {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40%; // Adjust as necessary
+  height: auto; // Adjust as necessary
+      background: url('title_image.svg') no-repeat left;
+      background-size: contain;
+  z-index: 3;
+}
+
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
 <body>
-    <video id="my-video" class="video-js" controls preload="auto" autoplay data-setup='{
-      "controlBar": {
-        "volumePanel": {
-          "inline": false
+  <div id="player" class="hide"></div>
+  <div id="cover-image"></div>
+  <button id="play-button" onclick="startVideo()"></button>
+  <img id="title-image" src="title_image.svg"> <!-- SVG is now directly embedded -->
+
+  <script>
+    var player;
+    var playButton = document.getElementById('play-button');
+    var coverImage = document.getElementById('cover-image');
+    var titleImage = document.getElementById('title-image');
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        videoId: 'mtvKGwJoE8A',
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          modestbranding: 0, // Display the YouTube logo
+          rel: 0,
+          showinfo: 1 // Display video title
         },
-        "fullscreenToggle": true,
-        "progressControl": false,
-        "remainingTimeDisplay": false,
-        "playToggle": false,
-        "currentTimeDisplay": false,
-        "durationDisplay": false,
-        "muteToggle": false
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      document.getElementById('play-button').addEventListener('click', function() {
+        startVideo();
+      });
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        playButton.classList.add('hide');
+        titleImage.classList.add('hide');
       }
-    }' id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup='{}'>
-        <source src="https://www.youtube.com/watch?v=mtvKGwJoE8A" type='video/youtube'>
-    </video>
-    <script>
-        var player = videojs('my-video', {
-            controls: true
-        });
-        var player = videojs('my-video');
-        player.play();
-    </script>
+    }
+
+    function startVideo() {
+      coverImage.style.display = "none";
+      player.getIframe().style.display = "block";
+      player.playVideo();
+    }
+  </script>
+  <script src="https://www.youtube.com/iframe_api"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV"></script>
     <script>
@@ -56,5 +116,4 @@
         gtag('config', 'G-3LJ8BTZGZV');
     </script>
 </body>
-
 </html>
