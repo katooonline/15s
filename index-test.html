@@ -34,16 +34,16 @@
     }
 
     #title-image {
-      position: absolute;
-      right: 10px;
-      bottom: 10px;
-      width: 600px; // Change as needed
-      height: 150px; // Change as needed
-      border: none;
-      background: url('title_image.svg') no-repeat center;
-      background-size: contain;
-      z-index: 3;
-    }
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: auto; // Auto for aspect ratio
+  height: 100px; // Adjust as necessary
+  border: none;
+  background: url('title_image.svg') no-repeat right bottom;
+  background-size: contain;
+  z-index: 3;
+}
 
     .hide {
       display: none;
