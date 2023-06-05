@@ -10,67 +10,47 @@
       height: 100%;
     }
 
-    #cover {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('random.jpg');
-      background-size: cover;
-      z-index: 1;
-    }
-
-    #play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 150px;
-      height: 150px;
-      border: none;
-      background: url('play_button.svg') no-repeat center;
-      background-size: contain;
-      z-index: 2;
-      display: block;
-    }
-
     #fullscreen-button {
       position: absolute;
       bottom: 10px;
-    left: 10px;
+      left: 80px;
       width: 60px;
       height: 60px;
       border: none;
       background: url('fullscreen_button.svg') no-repeat center;
       background-size: contain;
       z-index: 2;
-      display: block;
+      display: none;
     }
 
     #mute-button {
       position: absolute;
       bottom: 10px;
-    left: 80px;
+      left: 10px;
       width: 60px;
       height: 60px;
       border: none;
       background: url('mute_button.svg') no-repeat center;
       background-size: contain;
       z-index: 2;
-      display: block;
+      display: none;
+    }
+
+    .hide {
+      display: none;
     }
   </style>
 </head>
 <body>
   <div id="player"></div>
-  <div id="cover"></div>
-  <button id="play-button" onclick="playVideo()">►</button>
   <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
   <button id="mute-button" onclick="toggleMute()"></button>
 
   <script>
     var player;
+    var fullscreenButton = document.getElementById('fullscreen-button');
+    var muteButton = document.getElementById('mute-button');
+    var buttonTimer;
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -94,12 +74,6 @@
     }
 
     function onPlayerReady(event) {
-      document.getElementById('play-button').addEventListener('click', function() {
-        event.target.playVideo();
-        hideCover();
-        hideButton('play-button');
-      });
-
       document.getElementById('fullscreen-button').addEventListener('click', function() {
         toggleFullscreen();
       });
@@ -108,14 +82,9 @@
         toggleMute();
       });
 
-      showButton('play-button');
-      showButton('fullscreen-button');
-      showButton('mute-button');
-    }
-
-    function playVideo() {
-      player.playVideo();
-      hideButton('play-button');
+      showButton(fullscreenButton);
+      showButton(muteButton);
+      startButtonTimer();
     }
 
     function toggleFullscreen() {
@@ -134,23 +103,34 @@
     function toggleMute() {
       if (player.isMuted()) {
         player.unMute();
-        document.getElementById('mute-button').style.backgroundImage = "url('mute_button.svg')";
+        muteButton.style.backgroundImage = "url('unmute_button.svg')";
       } else {
         player.mute();
-        document.getElementById('mute-button').style.backgroundImage = "url('unmute_button.svg')";
+        muteButton.style.backgroundImage = "url('mute_button.svg')";
       }
     }
 
-    function hideCover() {
-      document.getElementById('cover').style.display = 'none';
+    document.addEventListener('mousemove', function() {
+      clearTimeout(buttonTimer);
+      showButton(fullscreenButton);
+      showButton(muteButton);
+      startButtonTimer();
+    });
+
+    function startButtonTimer() {
+      clearTimeout(buttonTimer);
+      buttonTimer = setTimeout(function() {
+        hideButton(fullscreenButton);
+        hideButton(muteButton);
+      }, 3000);
     }
 
-    function showButton(buttonId) {
-      document.getElementById(buttonId).style.display = 'block';
+    function showButton(button) {
+      button.classList.remove('hide');
     }
 
-    function hideButton(buttonId) {
-      document.getElementById(buttonId).style.display = 'none';
+    function hideButton(button) {
+      button.classList.add('hide');
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
