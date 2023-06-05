@@ -2,66 +2,65 @@
 <html>
 <head>
   <style>
-    #player,
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #player, #cover-image, #play-button, #title-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+    }
+
     #cover-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background: url('random.jpg') no-repeat center;
-  background-size: 100% 100%;
-}
+      z-index: 1;
+      background: url('random.jpg') no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
 
     #play-button {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 200px;
-      height: 200px;
-      border: none;
+      z-index: 2;
       background: url('play_button.svg') no-repeat center;
       background-size: contain;
-      z-index: 3;
-      transition: transform 0.3s ease;
+      transition: transform 0.2s;
     }
 
     #play-button:hover {
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    #play-button:active {
-      transform: translate(-50%, -50%) scale(0.95);
+      cursor: pointer;
+      transform: scale(1.05);
     }
 
     #title-image {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 40%; // Adjust as necessary
-  height: auto; // Adjust as necessary
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 25%; // Adjust as necessary
+      height: auto; // Adjust as necessary
       background: url('title_image.svg') no-repeat left;
       background-size: contain;
-  z-index: 3;
-}
-
-    .hide {
-      display: none;
+      z-index: 3;
     }
   </style>
 </head>
 <body>
-  <div id="player" class="hide"></div>
+  <div id="player"></div>
   <div id="cover-image"></div>
-  <button id="play-button" onclick="startVideo()"></button>
-  <img id="title-image" src="title_image.svg"> <!-- SVG is now directly embedded -->
+  <div id="play-button" onclick="startVideo()"></div>
+  <div id="title-image"></div>
 
   <script>
     var player;
     var playButton = document.getElementById('play-button');
-    var coverImage = document.getElementById('cover-image');
     var titleImage = document.getElementById('title-image');
 
     function onYouTubeIframeAPIReady() {
@@ -75,9 +74,9 @@
           disablekb: 1,
           fs: 0,
           iv_load_policy: 3,
-          modestbranding: 0, // Display the YouTube logo
+          modestbranding: 1,
           rel: 0,
-          showinfo: 1 // Display video title
+          showinfo: 0
         },
         events: {
           'onReady': onPlayerReady,
@@ -87,21 +86,18 @@
     }
 
     function onPlayerReady(event) {
-      document.getElementById('play-button').addEventListener('click', function() {
-        startVideo();
-      });
+      player.playVideo();
+      player.pauseVideo();
     }
 
     function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        playButton.classList.add('hide');
-        titleImage.classList.add('hide');
+      if (event.data === YT.PlayerState.PLAYING) {
+        playButton.style.display = "none";
+        titleImage.style.display = "none";
       }
     }
 
     function startVideo() {
-      coverImage.style.display = "none";
-      player.getIframe().style.display = "block";
       player.playVideo();
     }
   </script>
