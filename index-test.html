@@ -2,17 +2,12 @@
 <html>
 <head>
   <style>
-    #overlay, #player {
+    #player {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-    }
-
-    #overlay {
-      background-color: rgba(255, 255, 255, 0.0); /* Fully transparent white */
-      z-index: 1; /* Appears above the player, but beneath buttons */
     }
 
     #play-button {
@@ -35,13 +30,11 @@
 </head>
 <body>
   <div id="player"></div>
-  <div id="overlay"></div>
   <button id="play-button" onclick="startVideo()"></button>
 
   <script>
     var player;
     var playButton = document.getElementById('play-button');
-    var overlay = document.getElementById('overlay');
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -69,30 +62,16 @@
       document.getElementById('play-button').addEventListener('click', function() {
         startVideo();
       });
-
-      overlay.addEventListener('mousemove', function() {
-        showButton(playButton);
-      });
     }
 
     function onPlayerStateChange(event) {
       if (event.data == YT.PlayerState.PLAYING) {
-        hideButton(playButton);
-      } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
-        showButton(playButton);
+        playButton.classList.add('hide');
       }
     }
 
     function startVideo() {
       player.playVideo();
-    }
-
-    function showButton(button) {
-      button.classList.remove('hide');
-    }
-
-    function hideButton(button) {
-      button.classList.add('hide');
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
