@@ -21,29 +21,14 @@
       background-size: contain;
       z-index: 2;
     }
-    #mute-button {
-      position: absolute;
-      top: 95%; /* adjust position as needed */
-      left: 50%; /* adjust position as needed */
-      transform: translate(-50%, -50%);
-      width: 100px; /* adjust size as needed */
-      height: 100px; /* adjust size as needed */
-      border: none;
-      background: url('unmute_button.svg') no-repeat center;
-      background-size: contain;
-      z-index: 2;
-      display: none;
-    }
   </style>
 </head>
 <body>
   <div id="player"></div>
   <button id="play-button" onclick="playVideo()"></button>
-  <button id="mute-button" onclick="toggleMute()"></button>
 
   <script>
     var player;
-    var hideTimeout;
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
         height: '390',
@@ -69,41 +54,14 @@
       document.getElementById('play-button').addEventListener('click', function() {
         event.target.playVideo();
       });
-      var muteButton = document.getElementById('mute-button');
-      muteButton.style.display = 'block';
-      document.getElementById('player').addEventListener('mouseenter', showMuteButton);
-      document.getElementById('player').addEventListener('mousemove', showMuteButton);
-      document.getElementById('player').addEventListener('touchstart', showMuteButton);
-      document.getElementById('player').addEventListener('touchmove', showMuteButton);
-      resetHideTimeout();
     }
     function onPlayerStateChange(event) {
       if (event.data == YT.PlayerState.PLAYING) {
-        resetHideTimeout();
+        document.getElementById('play-button').style.display = 'none';
       }
     }
     function playVideo() {
       player.playVideo();
-      document.getElementById('play-button').style.display = 'none';
-    }
-    function toggleMute() {
-      if (player.isMuted()) {
-        player.unMute();
-        document.getElementById('mute-button').style.backgroundImage = "url('unmute_button.svg')";
-      } else {
-        player.mute();
-        document.getElementById('mute-button').style.backgroundImage = "url('mute_button.svg')";
-      }
-    }
-    function showMuteButton() {
-      document.getElementById('mute-button').style.display = 'block';
-      resetHideTimeout();
-    }
-    function resetHideTimeout() {
-      clearTimeout(hideTimeout);
-      hideTimeout = setTimeout(function() {
-        document.getElementById('mute-button').style.display = 'none';
-      }, 3000);
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
