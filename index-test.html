@@ -10,7 +10,7 @@
       height: 100%;
     }
 
-    #fullscreen-button, #mute-button {
+    #fullscreen-button, #mute-button, #play-button {
       position: absolute;
       bottom: 10px;
       border: none;
@@ -32,6 +32,13 @@
       background: url('unmute_button.svg') no-repeat center; /* default is unmute */
     }
 
+    #play-button {
+      left: 150px;
+      width: 60px;
+      height: 60px;
+      background: url('play_button.svg') no-repeat center; 
+    }
+
     .hide {
       display: none;
     }
@@ -41,11 +48,13 @@
   <div id="player"></div>
   <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
   <button id="mute-button" onclick="toggleMute()"></button>
+  <button id="play-button" onclick="startVideo()"></button>
 
   <script>
     var player;
     var fullscreenButton = document.getElementById('fullscreen-button');
     var muteButton = document.getElementById('mute-button');
+    var playButton = document.getElementById('play-button');
     var buttonTimer;
 
     function onYouTubeIframeAPIReady() {
@@ -64,7 +73,8 @@
           showinfo: 0
         },
         events: {
-          'onReady': onPlayerReady
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
         }
       });
     }
@@ -74,10 +84,18 @@
 
       fullscreenButton.addEventListener('click', toggleFullscreen);
       muteButton.addEventListener('click', toggleMute);
+      playButton.addEventListener('click', startVideo);
 
       showButton(fullscreenButton);
       showButton(muteButton);
+      showButton(playButton);
       startButtonTimer();
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        hideButton(playButton);
+      }
     }
 
     function toggleFullscreen() {
@@ -103,6 +121,10 @@
       }
     }
 
+    function startVideo() {
+      player.playVideo();
+    }
+
     // Listen for any user interaction events
     document.addEventListener('mousemove', resetButtonTimer);
     document.addEventListener('mousedown', resetButtonTimer);
@@ -114,6 +136,7 @@
       buttonTimer = setTimeout(function() {
         hideButton(fullscreenButton);
         hideButton(muteButton);
+        hideButton(playButton);
       }, 3000);
     }
 
@@ -121,6 +144,9 @@
       clearTimeout(buttonTimer);
       showButton(fullscreenButton);
       showButton(muteButton);
+      if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+        showButton(playButton);
+      }
       startButtonTimer();
     }
 
