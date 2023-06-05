@@ -9,16 +9,6 @@
     width: 100%;
     height: 100%;
   }
-  #cover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('random.jpg');
-    background-size: cover;
-    z-index: 1;
-  }
   #play-button {
     display: none;
     width: 150px;
@@ -41,10 +31,9 @@
 </head>
 <body>
   <div id="player"></div>
-  <div id="cover"></div>
-  <div id="button-container">
-    <button id="play-button" onclick="playVideo()"></button>
-    <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
+  <button id="play-button" onclick="playVideo()">►</button>
+  <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
+  <button id="mute-button" onclick="toggleMute()"></button>
   </div>
 
   <script>
