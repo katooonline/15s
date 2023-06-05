@@ -15,36 +15,17 @@
       z-index: 1; /* Appears above the player, but beneath buttons */
     }
 
-    #fullscreen-button, #mute-button, #play-button {
-      position: absolute;
-      border: none;
-      background-size: contain;
-      z-index: 2;
-    }
-
-    #fullscreen-button {
-      bottom: 10px;
-      left: 10px;
-      width: 60px;
-      height: 60px;
-      background: url('fullscreen_button.svg') no-repeat center;
-    }
-
-    #mute-button {
-      bottom: 10px;
-      left: 80px;
-      width: 60px;
-      height: 60px;
-      background: url('unmute_button.svg') no-repeat center;
-    }
-
     #play-button {
+      position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
       width: 150px;
       height: 150px;
+      border: none;
       background: url('play_button.svg') no-repeat center;
+      background-size: contain;
+      z-index: 2;
     }
 
     .hide {
@@ -55,17 +36,12 @@
 <body>
   <div id="player"></div>
   <div id="overlay"></div>
-  <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
-  <button id="mute-button" onclick="toggleMute()"></button>
   <button id="play-button" onclick="startVideo()"></button>
 
   <script>
     var player;
-    var fullscreenButton = document.getElementById('fullscreen-button');
-    var muteButton = document.getElementById('mute-button');
     var playButton = document.getElementById('play-button');
     var overlay = document.getElementById('overlay');
-    var buttonTimer;
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -90,24 +66,13 @@
     }
 
     function onPlayerReady(event) {
-      document.getElementById('fullscreen-button').addEventListener('click', function() {
-        toggleFullscreen();
-      });
-
-      document.getElementById('mute-button').addEventListener('click', function() {
-        toggleMute();
-      });
-
       document.getElementById('play-button').addEventListener('click', function() {
         startVideo();
       });
 
       overlay.addEventListener('mousemove', function() {
-        resetButtonTimer();
+        showButton(playButton);
       });
-
-      showButton(playButton);
-      startButtonTimer();
     }
 
     function onPlayerStateChange(event) {
@@ -118,46 +83,8 @@
       }
     }
 
-    function toggleFullscreen() {
-      var playerElement = document.getElementById('player');
-      if (playerElement.requestFullscreen) {
-        playerElement.requestFullscreen();
-      } else if (playerElement.mozRequestFullScreen) {
-        playerElement.mozRequestFullScreen();
-      } else if (playerElement.webkitRequestFullscreen) {
-        playerElement.webkitRequestFullscreen();
-      } else if (playerElement.msRequestFullscreen) {
-        playerElement.msRequestFullscreen();
-      }
-    }
-
-    function toggleMute() {
-      if (player.isMuted()) {
-        player.unMute();
-        muteButton.style.backgroundImage = "url('unmute_button.svg')";
-      } else {
-        player.mute();
-        muteButton.style.backgroundImage = "url('mute_button.svg')";
-      }
-    }
-
     function startVideo() {
       player.playVideo();
-    }
-
-    function resetButtonTimer() {
-      clearTimeout(buttonTimer);
-      showButton(fullscreenButton);
-      showButton(muteButton);
-      startButtonTimer();
-    }
-
-    function startButtonTimer() {
-      clearTimeout(buttonTimer);
-      buttonTimer = setTimeout(function() {
-        hideButton(fullscreenButton);
-        hideButton(muteButton);
-      }, 3000);
     }
 
     function showButton(button) {
