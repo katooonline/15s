@@ -10,10 +10,21 @@
       height: 100%;
     }
 
+    #cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('random.jpg');
+      background-size: cover;
+      z-index: 1;
+    }
+
     #fullscreen-button {
       position: absolute;
       bottom: 10px;
-      left: 80px;
+      left: 10px;
       width: 60px;
       height: 60px;
       border: none;
@@ -26,7 +37,7 @@
     #mute-button {
       position: absolute;
       bottom: 10px;
-      left: 10px;
+      left: 80px;
       width: 60px;
       height: 60px;
       border: none;
@@ -43,6 +54,7 @@
 </head>
 <body>
   <div id="player"></div>
+  <div id="cover"></div>
   <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
   <button id="mute-button" onclick="toggleMute()"></button>
 
