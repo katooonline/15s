@@ -14,18 +14,31 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 150px; /* adjust size as needed */
-      height: 150px; /* adjust size as needed */
+      width: 100px; /* adjust size as needed */
+      height: 100px; /* adjust size as needed */
       border: none;
-      background: url('play_button.svg') no-repeat center;
+      background: url('my_play_button.svg') no-repeat center;
       background-size: contain;
       z-index: 2;
+    }
+    #fullscreen-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px; /* adjust size as needed */
+      height: 40px; /* adjust size as needed */
+      border: none;
+      background: url('fullscreen_button.svg') no-repeat center;
+      background-size: contain;
+      z-index: 2;
+      display: none;
     }
   </style>
 </head>
 <body>
   <div id="player"></div>
   <button id="play-button" onclick="playVideo()"></button>
+  <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
 
   <script>
     var player;
@@ -54,6 +67,7 @@
       document.getElementById('play-button').addEventListener('click', function() {
         event.target.playVideo();
       });
+      document.getElementById('fullscreen-button').style.display = 'block';
     }
     function onPlayerStateChange(event) {
       if (event.data == YT.PlayerState.PLAYING) {
@@ -62,6 +76,18 @@
     }
     function playVideo() {
       player.playVideo();
+    }
+    function toggleFullscreen() {
+      var playerElement = document.getElementById('player');
+      if (playerElement.requestFullscreen) {
+        playerElement.requestFullscreen();
+      } else if (playerElement.mozRequestFullScreen) {
+        playerElement.mozRequestFullScreen();
+      } else if (playerElement.webkitRequestFullscreen) {
+        playerElement.webkitRequestFullscreen();
+      } else if (playerElement.msRequestFullscreen) {
+        playerElement.msRequestFullscreen();
+      }
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
