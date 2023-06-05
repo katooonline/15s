@@ -23,7 +23,7 @@
     }
     #mute-button {
       position: absolute;
-      top: 90%; /* adjust position as needed */
+      top: 95%; /* adjust position as needed */
       left: 50%; /* adjust position as needed */
       transform: translate(-50%, -50%);
       width: 100px; /* adjust size as needed */
@@ -72,7 +72,9 @@
       var muteButton = document.getElementById('mute-button');
       muteButton.style.display = 'block';
       document.getElementById('player').addEventListener('mouseenter', showMuteButton);
+      document.getElementById('player').addEventListener('mousemove', showMuteButton);
       document.getElementById('player').addEventListener('touchstart', showMuteButton);
+      document.getElementById('player').addEventListener('touchmove', showMuteButton);
       resetHideTimeout();
     }
     function onPlayerStateChange(event) {
@@ -85,15 +87,13 @@
       document.getElementById('play-button').style.display = 'none';
     }
     function toggleMute() {
-      var muteButton = document.getElementById('mute-button');
       if (player.isMuted()) {
         player.unMute();
-        muteButton.style.backgroundImage = "url('unmute_button.svg')";
+        document.getElementById('mute-button').style.backgroundImage = "url('unmute_button.svg')";
       } else {
         player.mute();
-        muteButton.style.backgroundImage = "url('mute_button.svg')";
+        document.getElementById('mute-button').style.backgroundImage = "url('mute_button.svg')";
       }
-      resetHideTimeout();
     }
     function showMuteButton() {
       document.getElementById('mute-button').style.display = 'block';
