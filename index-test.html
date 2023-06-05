@@ -112,7 +112,7 @@
       resetHideTimeout();
     }
     function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
+      if (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.PAUSED) {
         hideButtons();
         document.getElementById('cover').style.display = 'none';
       }
