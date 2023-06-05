@@ -45,7 +45,7 @@
         width: '640',
         videoId: 'mtvKGwJoE8A',
         playerVars: {
-          autoplay: 1, // Enable autoplay
+          autoplay: 0, // Disable autoplay
           controls: 0,
           disablekb: 1,
           fs: 0,
@@ -60,7 +60,6 @@
       });
     }
     function onPlayerReady(event) {
-      event.target.playVideo(); // Try to autoplay when video is ready
       document.getElementById('play-button').addEventListener('click', function() {
         playVideo();
       });
