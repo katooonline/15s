@@ -89,7 +89,84 @@
       });
     }
 
-    // Remaining code here...
+    function onPlayerReady(event) {
+      document.getElementById('fullscreen-button').addEventListener('click', function() {
+        toggleFullscreen();
+      });
+
+      document.getElementById('mute-button').addEventListener('click', function() {
+        toggleMute();
+      });
+
+      document.getElementById('play-button').addEventListener('click', function() {
+        startVideo();
+      });
+
+      overlay.addEventListener('mousemove', function() {
+        resetButtonTimer();
+      });
+
+      showButton(playButton);
+      startButtonTimer();
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        hideButton(playButton);
+      } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+        showButton(playButton);
+      }
+    }
+
+    function toggleFullscreen() {
+      var playerElement = document.getElementById('player');
+      if (playerElement.requestFullscreen) {
+        playerElement.requestFullscreen();
+      } else if (playerElement.mozRequestFullScreen) {
+        playerElement.mozRequestFullScreen();
+      } else if (playerElement.webkitRequestFullscreen) {
+        playerElement.webkitRequestFullscreen();
+      } else if (playerElement.msRequestFullscreen) {
+        playerElement.msRequestFullscreen();
+      }
+    }
+
+    function toggleMute() {
+      if (player.isMuted()) {
+        player.unMute();
+        muteButton.style.backgroundImage = "url('unmute_button.svg')";
+      } else {
+        player.mute();
+        muteButton.style.backgroundImage = "url('mute_button.svg')";
+      }
+    }
+
+    function startVideo() {
+      player.playVideo();
+    }
+
+    function resetButtonTimer() {
+      clearTimeout(buttonTimer);
+      showButton(fullscreenButton);
+      showButton(muteButton);
+      startButtonTimer();
+    }
+
+    function startButtonTimer() {
+      clearTimeout(buttonTimer);
+      buttonTimer = setTimeout(function() {
+        hideButton(fullscreenButton);
+        hideButton(muteButton);
+      }, 3000);
+    }
+
+    function showButton(button) {
+      button.classList.remove('hide');
+    }
+
+    function hideButton(button) {
+      button.classList.add('hide');
+    }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
