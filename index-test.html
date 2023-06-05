@@ -8,6 +8,8 @@
       left: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      background-color: black;
     }
 
     #fullscreen-button {
@@ -42,8 +44,7 @@
   </style>
 </head>
 <body>
-  <div id="player"></div>
-  <div id="cover"></div>
+  <video id="player" src="random.jpg" poster="random.jpg"></video>
   <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
   <button id="mute-button" onclick="toggleMute()"></button>
 
