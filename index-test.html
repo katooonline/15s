@@ -78,9 +78,9 @@
           disablekb: 1,
           fs: 0,
           iv_load_policy: 3,
-          modestbranding: 1,
+          modestbranding: 0, // Display the YouTube logo
           rel: 0,
-          showinfo: 0
+          showinfo: 1 // Display video title
         },
         events: {
           'onReady': onPlayerReady,
@@ -89,75 +89,7 @@
       });
     }
 
-    function onPlayerReady(event) {
-      player.unMute(); // The player starts unmuted
-
-      fullscreenButton.addEventListener('click', toggleFullscreen);
-      muteButton.addEventListener('click', toggleMute);
-      playButton.addEventListener('click', startVideo);
-
-      overlay.addEventListener('mousemove', resetButtonTimer);
-
-      startButtonTimer();
-    }
-
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.PLAYING) {
-        playButton.style.display = 'none';
-      } else {
-        playButton.style.display = 'block';
-      }
-    }
-
-    function toggleFullscreen() {
-      var playerElement = document.getElementById('player');
-      if (playerElement.requestFullscreen) {
-        playerElement.requestFullscreen();
-      } else if (playerElement.mozRequestFullScreen) {
-        playerElement.mozRequestFullScreen();
-      } else if (playerElement.webkitRequestFullscreen) {
-        playerElement.webkitRequestFullscreen();
-      } else if (playerElement.msRequestFullscreen) {
-        playerElement.msRequestFullscreen();
-      }
-    }
-
-    function toggleMute() {
-      if (player.isMuted()) {
-        player.unMute();
-        muteButton.style.backgroundImage = "url('unmute_button.svg')";
-      } else {
-        player.mute();
-        muteButton.style.backgroundImage = "url('mute_button.svg')";
-      }
-    }
-
-    function startVideo() {
-      player.playVideo();
-    }
-
-    function startButtonTimer() {
-      clearTimeout(buttonTimer);
-      buttonTimer = setTimeout(function() {
-        hideButton(fullscreenButton);
-        hideButton(muteButton);
-      }, 3000);
-    }
-
-    function resetButtonTimer() {
-      clearTimeout(buttonTimer);
-      showButton(fullscreenButton);
-      showButton(muteButton);
-      startButtonTimer();
-    }
-
-    function showButton(button) {
-      button.style.display = 'block';
-    }
-
-    function hideButton(button) {
-      button.style.display = 'none';
-    }
+    // Remaining code here...
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
