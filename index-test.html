@@ -10,34 +10,32 @@
       height: 100%;
     }
 
-    #fullscreen-button {
+    #fullscreen-button, #mute-button {
       position: absolute;
       bottom: 10px;
+      border: none;
+      background-size: contain;
+      z-index: 2;
+      opacity: 1;
+      transition: opacity 1s ease-out;
+    }
+
+    #fullscreen-button {
       left: 10px;
       width: 60px;
       height: 60px;
-      border: none;
       background: url('fullscreen_button.svg') no-repeat center;
-      background-size: contain;
-      z-index: 2;
-      display: block;
     }
 
     #mute-button {
-      position: absolute;
-      bottom: 10px;
       left: 80px;
       width: 60px;
       height: 60px;
-      border: none;
-      background: url('mute_button.svg') no-repeat center;
-      background-size: contain;
-      z-index: 2;
-      display: block;
+      background: url('unmute_button.svg') no-repeat center; /* default is unmute */
     }
 
     .hide {
-      display: none;
+      opacity: 0;
     }
   </style>
 </head>
@@ -74,13 +72,10 @@
     }
 
     function onPlayerReady(event) {
-      document.getElementById('fullscreen-button').addEventListener('click', function() {
-        toggleFullscreen();
-      });
+      player.unMute(); // The player starts unmuted
 
-      document.getElementById('mute-button').addEventListener('click', function() {
-        toggleMute();
-      });
+      fullscreenButton.addEventListener('click', toggleFullscreen);
+      muteButton.addEventListener('click', toggleMute);
 
       showButton(fullscreenButton);
       showButton(muteButton);
