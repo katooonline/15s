@@ -1,62 +1,60 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <style>
-    #player {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    #play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 50px;
-      color: white;
-      background: rgba(0, 0, 0, 0.6);
-      border: none;
-    }
-  </style>
-</head>
-<body>
-  <div id="player"></div>
-  <button id="play-button" onclick="playVideo()">►</button>
 
-  <script>
-    var player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        videoId: 'mtvKGwJoE8A',
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          iv_load_policy: 3,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0
-        },
-        events: {
-          'onReady': onPlayerReady
+<head>
+    <meta charset="utf-8" />
+    <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
+    <style>
+        .video-js {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
-      });
-    }
-    function onPlayerReady(event) {
-      document.getElementById('play-button').addEventListener('click', function() {
-        event.target.playVideo();
-      });
-    }
-    function playVideo() {
-      player.playVideo();
-      document.getElementById('play-button').style.display = 'none';
-    }
-  </script>
-  <script src="https://www.youtube.com/iframe_api"></script>
+        .video-js .vjs-loading-spinner {
+  display: none;
+}
+    </style>
+    <title>15s</title>
+</head>
+
+<body>
+    <video id="my-video" class="video-js" controls preload="auto" autoplay data-setup='{
+      "controlBar": {
+        "volumePanel": {
+          "inline": false
+        },
+        "fullscreenToggle": true,
+        "progressControl": false,
+        "remainingTimeDisplay": false,
+        "playToggle": false,
+        "currentTimeDisplay": false,
+        "durationDisplay": false,
+        "muteToggle": false
+      }
+    }' id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup='{}'>
+        <source src="https://www.youtube.com/watch?v=mtvKGwJoE8A" type='video/youtube'>
+    </video>
+    <script>
+        var player = videojs('my-video', {
+            controls: true
+        });
+        var player = videojs('my-video');
+        player.play();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3LJ8BTZGZV');
+    </script>
 </body>
+
 </html>
