@@ -19,11 +19,15 @@
       background-size: cover;
       z-index: 1;
     }
-    #play-button {
+    #button-container {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    #play-button {
+      position: relative;
       width: 150px; /* adjust size as needed */
       height: 150px; /* adjust size as needed */
       border: none;
@@ -32,9 +36,7 @@
       z-index: 2;
     }
     #fullscreen-button {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
+      position: relative;
       width: 60px; /* adjust size as needed */
       height: 60px; /* adjust size as needed */
       border: none;
@@ -48,8 +50,10 @@
 <body>
   <div id="player"></div>
   <div id="cover"></div>
-  <button id="play-button" onclick="playVideo()"></button>
-  <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
+  <div id="button-container">
+    <button id="play-button" onclick="playVideo()"></button>
+    <button id="fullscreen-button" onclick="toggleFullscreen()"></button>
+  </div>
 
   <script>
     var player;
