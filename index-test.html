@@ -31,7 +31,7 @@
     #play-button {
       z-index: 2;
       background: url('play_button.svg') no-repeat center;
-      background-size: contain;
+      background-size: 10%; /* Adjust this value to change the play button size */
       transition: transform 0.2s;
     }
 
@@ -79,15 +79,9 @@
           showinfo: 0
         },
         events: {
-          'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
         }
       });
-    }
-
-    function onPlayerReady(event) {
-      player.playVideo();
-      player.pauseVideo();
     }
 
     function onPlayerStateChange(event) {
