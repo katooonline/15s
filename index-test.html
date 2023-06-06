@@ -3,28 +3,23 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>15s</title>
-  <meta name=”description” content=”Random Video Snap Live Stream by Takafumi Kato” />
+  <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
   <style>
     body, html {
       height: 100%;
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: black;
     }
 
     #player {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      z-index: -100;
-      transform: translateX(-50%) translateY(-50%);
-      background: url('//i1.ytimg.com/vi/mtvKGwJoE8A/hqdefault.jpg') no-repeat;
-      background-size: cover;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
@@ -41,21 +36,16 @@
         videoId: 'mtvKGwJoE8A',
         playerVars: {
           autoplay: 0,
-          controls: 0,
+          controls: 1, // controls are now visible
           disablekb: 1,
           fs: 0,
           iv_load_policy: 3,
           modestbranding: 1,
           rel: 0,
           showinfo: 0
-        },
+        }
       });
     }
-
-    function startVideo() {
-      player.playVideo();
-    }
-
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
