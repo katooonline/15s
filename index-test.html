@@ -3,34 +3,22 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>15s</title>
-  <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
+  <meta name=”description” content=”Random Video Snap Live Stream by Takafumi Kato” />
   <style>
-     body, html {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #000;
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
     }
 
     #player {
-        position: relative;
-        width: 100%;
-        height: 0;
-        padding-bottom: 56.25%; /* for 16:9 aspect ratio */
-        overflow: hidden;
-        background: #000;
-    }
-
-    #player iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 56.25%; /* 16:9 Aspect Ratio */
     }
   </style>
 </head>
@@ -41,12 +29,9 @@
     var player;
     
     function onYouTubeIframeAPIReady() {
-      var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-      var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
       player = new YT.Player('player', {
-        width: viewportWidth,
-        height: viewportHeight,
+        height: '100%',
+        width: '100%',
         videoId: 'mtvKGwJoE8A',
         playerVars: {
           autoplay: 0,
@@ -63,6 +48,4 @@
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
-
-
 </html>
