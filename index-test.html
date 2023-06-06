@@ -4,39 +4,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>15s</title>
   <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
-  
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css">
   <style>
     body, html {
       height: 100%;
       margin: 0;
       padding: 0;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background-color: black;
     }
-    
+
     #player {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    
-    .plyr__video-wrapper, .plyr__video-wrapper video {
-      object-fit: contain;
+      position: relative;
+      max-width: 100%;
+      max-height: 100%;
+      width: 100vw;
+      height: 56.25vw; /* 16:9 Aspect Ratio */
     }
   </style>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
 </head>
 <body>
   <div id="player" data-plyr-provider="youtube" data-plyr-embed-id="mtvKGwJoE8A"></div>
 
-  <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
+  <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => { 
-      const player = new Plyr('#player', {
-        controls : ['play-large', 'mute', 'volume'],
-      });
+    const player = new Plyr('#player', {
+      controls: ['play-large', 'play', 'mute', 'volume', 'captions', 'fullscreen']
     });
   </script>
 </body>
