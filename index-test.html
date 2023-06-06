@@ -81,47 +81,49 @@
   <div id="title-image"></div>
 
   <script>
-    var player;
-    var playButton = document.getElementById('play-button');
-    var coverImage = document.getElementById('cover-image');
-    var titleImage = document.getElementById('title-image');
+  var player;
+  var playButton = document.getElementById('play-button');
+  var coverImage = document.getElementById('cover-image');
+  var titleImage = document.getElementById('title-image');
+  var loadingAnimation = document.getElementById('loading-animation'); // This line was missing
 
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '100%',
-        width: '100%',
-        videoId: 'mtvKGwJoE8A',
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          iv_load_policy: 3,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0
-        },
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    function startVideo() {
-  playButton.style.display = "none";
-  loadingAnimation.style.display = "block";
-  player.playVideo();
-}
-
-function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.BUFFERING) {
-    playButton.style.display = "none";
-    coverImage.style.display = "none";
-    titleImage.style.display = "none";
-    loadingAnimation.style.display = "none";
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '100%',
+      width: '100%',
+      videoId: 'mtvKGwJoE8A',
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        iv_load_policy: 3,
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      },
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
   }
-}
-  </script>
+
+  function startVideo() {
+    playButton.style.display = "none";
+    loadingAnimation.style.display = "block";
+    player.playVideo();
+  }
+
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.BUFFERING) {
+      playButton.style.display = "none";
+      coverImage.style.display = "none";
+      titleImage.style.display = "none";
+      loadingAnimation.style.display = "none";
+    }
+  }
+</script>
+
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
