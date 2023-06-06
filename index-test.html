@@ -107,26 +107,20 @@
       });
     }
 
-    function onPlayerStateChange(event) {
-  var loadingAnimation = document.getElementById('loading-animation');
+    function startVideo() {
+  playButton.style.display = "none";
+  loadingAnimation.style.display = "block";
+  player.playVideo();
+}
 
-  if (event.data === YT.PlayerState.UNSTARTED) {
-    playButton.style.display = "block";
-    loadingAnimation.style.display = "none";
-  } else if (event.data === YT.PlayerState.BUFFERING) {
-    playButton.style.display = "none";
-    loadingAnimation.style.display = "block";
-  } else if (event.data === YT.PlayerState.PLAYING) {
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.BUFFERING) {
     playButton.style.display = "none";
     coverImage.style.display = "none";
     titleImage.style.display = "none";
     loadingAnimation.style.display = "none";
   }
 }
-
-    function startVideo() {
-      player.playVideo();
-    }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
