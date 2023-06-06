@@ -39,9 +39,14 @@
 
   <script>
     var player;
-
+    
     function onYouTubeIframeAPIReady() {
+      var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
       player = new YT.Player('player', {
+        width: viewportWidth,
+        height: viewportHeight,
         videoId: 'mtvKGwJoE8A',
         playerVars: {
           autoplay: 0,
@@ -58,5 +63,6 @@
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
+
 
 </html>
