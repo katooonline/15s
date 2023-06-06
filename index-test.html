@@ -52,17 +52,18 @@
     }
 
     #loading-animation {
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 3;
-      width: 100px;
-      height: 100px;
-      background: url('loading_animation.gif') no-repeat center;
-      background-size: contain;
-    }
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 50px;   /* change this */
+  height: 50px;  /* and this */
+  background: url('loading_animation.gif') no-repeat center;
+  background-size: contain;
+}
+
 
     #title-image {
       position: absolute;
@@ -114,7 +115,9 @@
     }
 
     function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.PLAYING) {
+      if (event.data === YT.PlayerState.CUED) {
+        playButton.style.display = "block";
+      } else if (event.data === YT.PlayerState.PLAYING) {
         playButton.style.display = "none";
         coverImage.style.display = "none";
         loadingAnimation.style.display = "none";
