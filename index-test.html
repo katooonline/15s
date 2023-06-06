@@ -48,7 +48,7 @@
     }
 
     window.addEventListener('resize', adjustVideoSize);
-    adjustVideoSize();
+    window.onload = adjustVideoSize;
 
     const player = new Plyr('#player', {
       controls: ['play-large', 'play', 'mute', 'volume', 'captions', 'fullscreen']
