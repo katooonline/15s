@@ -18,6 +18,8 @@
 
     #player {
       position: relative;
+      max-width: 100%;
+      max-height: 100%;
     }
   </style>
   <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
@@ -33,11 +35,11 @@
       let width, height;
 
       if (windowAspectRatio > aspectRatio) {
-        width = window.innerWidth;
-        height = window.innerWidth / aspectRatio;
-      } else {
         width = window.innerHeight * aspectRatio;
         height = window.innerHeight;
+      } else {
+        width = window.innerWidth;
+        height = window.innerWidth / aspectRatio;
       }
 
       const playerElement = document.getElementById('player');
