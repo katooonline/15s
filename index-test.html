@@ -17,17 +17,15 @@
     
     #player {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: calc(100% - 40px); /* Subtracting 40px to prevent control from being hidden */
-      height: calc(100% - 40px); /* Subtracting 40px to prevent control from being hidden */
-      transform: translate(-50%, -50%);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
     
     .plyr__video-wrapper video {
-  object-fit: cover;
-}
-
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -37,7 +35,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => { 
       const player = new Plyr('#player', {
-        controls : ['play', 'mute', 'volume'],
+        controls : ['play-large', 'mute', 'volume'],
       });
     });
   </script>
