@@ -64,6 +64,7 @@
     var player;
     var centerDiv = document.getElementById('centerDiv');
     var timeout;
+    var mouseMoved = false;
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -95,16 +96,20 @@
       centerDiv.style.display = 'none';
       clearTimeout(timeout);
       timeout = setTimeout(function() {
-        centerDiv.style.display = 'block';
-      }, 2000);
+        if (!mouseMoved) {
+          centerDiv.style.display = 'block';
+        }
+      }, 3000);
     }
 
     function resetTimer() {
       centerDiv.style.display = 'none';
       clearTimeout(timeout);
       timeout = setTimeout(function() {
-        centerDiv.style.display = 'block';
-      }, 2000);
+        if (!mouseMoved) {
+          centerDiv.style.display = 'block';
+        }
+      }, 3000);
     }
 
     function hideIcons() {
@@ -112,14 +117,17 @@
     }
 
     document.body.addEventListener('mousemove', function() {
+      mouseMoved = true;
       resetTimer();
     });
 
     document.body.addEventListener('mouseleave', function() {
+      mouseMoved = false;
       hideIcons();
     });
 
     document.body.addEventListener('mouseenter', function() {
+      mouseMoved = false;
       resetTimer();
     });
   </script>
