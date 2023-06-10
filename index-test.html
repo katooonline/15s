@@ -19,7 +19,8 @@
       top: 50%;
       left: 10%;
       transform: translateY(-50%);
-      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
       color: white;
       text-align: left;
     }
@@ -83,7 +84,7 @@
     }
 
     function startTimer() {
-      centerDiv.style.display = 'block';
+      centerDiv.style.opacity = '1';
       clearTimeout(timeout);
       timeout = setTimeout(function() {
         if (!mouseMoved) {
@@ -93,7 +94,7 @@
     }
 
     function resetTimer() {
-      centerDiv.style.display = 'block';
+      centerDiv.style.opacity = '1';
       clearTimeout(timeout);
       timeout = setTimeout(function() {
         if (!mouseMoved) {
@@ -103,7 +104,7 @@
     }
 
     function hideIcons() {
-      centerDiv.style.display = 'none';
+      centerDiv.style.opacity = '0';
     }
 
     document.body.addEventListener('mousemove', function() {
