@@ -74,25 +74,31 @@
 
     function onPlayerStateChange(event) {
       if (event.data == YT.PlayerState.PLAYING) {
-        socialOverlay.style.display = 'block';
+        showOverlay();
       } else {
-        socialOverlay.style.display = 'none';
+        hideOverlay();
       }
+    }
+
+    function showOverlay() {
+      socialOverlay.style.display = 'block';
+    }
+
+    function hideOverlay() {
+      socialOverlay.style.display = 'none';
     }
 
     document.body.addEventListener('mousemove', function() {
       if (player.getPlayerState() == YT.PlayerState.PLAYING) {
         clearTimeout(timeout);
-        socialOverlay.style.display = 'block';
-        timeout = setTimeout(function() {
-          socialOverlay.style.display = 'none';
-        }, 2000); // 2秒後に非表示にする
+        showOverlay();
+        timeout = setTimeout(hideOverlay, 2000); // 2秒後に非表示にする
       }
     });
 
     document.body.addEventListener('click', function(event) {
       if (event.target.id !== 'player' && event.target.id !== 'social-overlay') {
-        socialOverlay.style.display = 'none';
+        hideOverlay();
       }
     }, true);
   </script>
