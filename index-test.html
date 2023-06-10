@@ -92,16 +92,19 @@
     }
 
     function startTimer() {
-      centerDiv.style.display = 'block';
+      centerDiv.style.display = 'none';
       clearTimeout(timeout);
       timeout = setTimeout(function() {
-        centerDiv.style.display = 'none';
+        centerDiv.style.display = 'block';
       }, 2000);
     }
 
     function resetTimer() {
-      centerDiv.style.display = 'block';
+      centerDiv.style.display = 'none';
       clearTimeout(timeout);
+      timeout = setTimeout(function() {
+        centerDiv.style.display = 'block';
+      }, 2000);
     }
 
     function hideIcons() {
