@@ -49,6 +49,7 @@
   <script>
     var player;
     var socialOverlay = document.getElementById('social-overlay');
+    var timeout;
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -81,7 +82,11 @@
 
     document.body.addEventListener('mousemove', function() {
       if (player.getPlayerState() == YT.PlayerState.PLAYING) {
+        clearTimeout(timeout);
         socialOverlay.style.display = 'block';
+        timeout = setTimeout(function() {
+          socialOverlay.style.display = 'none';
+        }, 2000); // 2秒後に非表示にする
       }
     });
 
