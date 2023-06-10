@@ -21,10 +21,30 @@
       max-width: 100%;
       max-height: 100%;
     }
+    
+    #social-overlay {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
   </style>
+  
 </head>
 <body>
   <div id="player"></div>
+  <div id="social-overlay">
+  <div id="social-text">ここにテキストを入力</div>
+  <div id="social-links">
+    <a href="https://facebook.com" target="_blank">Facebook</a>
+    <a href="https://twitter.com" target="_blank">Twitter</a>
+    <!-- 他のソーシャルリンク -->
+  </div>
+</div>
+
 
   <script>
     function adjustVideoSize() {
@@ -65,6 +85,21 @@
           showinfo: 0
         }
       });
+      
+      var socialOverlay = document.getElementById('social-overlay');
+
+// プレイヤーがクリックされたとき
+document.getElementById('player').addEventListener('click', function() {
+  socialOverlay.style.display = 'block';
+});
+
+// プレイヤー以外がクリックされたとき
+document.body.addEventListener('click', function(event) {
+  if (event.target.id !== 'player' && event.target.id !== 'social-overlay') {
+    socialOverlay.style.display = 'none';
+  }
+}, true);
+
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
