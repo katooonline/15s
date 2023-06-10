@@ -19,7 +19,7 @@
       top: 50%;
       left: 10%;
       transform: translateY(-50%);
-      display: none;
+      display: block;
       color: white;
       text-align: left;
     }
@@ -27,6 +27,7 @@
     .icon {
       font-size: 2rem; /* Double the icon size */
       padding: 10px;
+      color: white;
     }
 
     /* Set link color */
@@ -37,17 +38,6 @@
     /* Remove link underline */
     a:hover, a:visited, a:link, a:active {
       text-decoration: none;
-      color: white;
-    }
-
-    #player {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
     }
   </style>
 </head>
@@ -93,21 +83,21 @@
     }
 
     function startTimer() {
-      centerDiv.style.display = 'none';
+      centerDiv.style.display = 'block';
       clearTimeout(timeout);
       timeout = setTimeout(function() {
         if (!mouseMoved) {
-          centerDiv.style.display = 'block';
+          centerDiv.style.display = 'none';
         }
       }, 3000);
     }
 
     function resetTimer() {
-      centerDiv.style.display = 'none';
+      centerDiv.style.display = 'block';
       clearTimeout(timeout);
       timeout = setTimeout(function() {
         if (!mouseMoved) {
-          centerDiv.style.display = 'block';
+          centerDiv.style.display = 'none';
         }
       }, 3000);
     }
