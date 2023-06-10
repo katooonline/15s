@@ -89,6 +89,15 @@
         centerDiv.style.display = 'none';
       }, 2000);
     }
+    
+    document.body.addEventListener('mouseover', function() {
+      centerDiv.style.display = 'block';
+      clearTimeout(centerDiv.dataset.timerId);
+    });
+    
+    document.body.addEventListener('mouseout', function() {
+      centerDiv.style.display = 'none';
+    });
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css" rel="stylesheet">
