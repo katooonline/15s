@@ -4,13 +4,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>15s</title>
   <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
+  <link rel="stylesheet" href="https://unpkg.com/ionicons@5.5.3/dist/css/ionicons.min.css">
   <style>
     body, html {
       height: 100%;
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background: black;
+      cursor: none;
+      background-color: black;
+    }
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      color: white;
+      text-align: center;
+    }
+
+    .icon {
+      padding: 10px;
     }
 
     #player {
@@ -22,37 +38,21 @@
       width: 100%;
       height: 100%;
     }
-
-    #social-overlay {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  color: white;
-}
-
   </style>
 </head>
 <body>
   <div id="player"></div>
 
-  <div id="social-overlay">
-    <div id="social-text">ここにテキストを入力</div>
-    <div id="social-links">
-      <a href="https://facebook.com" target="_blank" style="color: white;">Facebook</a>
-      <a href="https://twitter.com" target="_blank" style="color: white;">Twitter</a>
-      <!-- 他のソーシャルリンク -->
-    </div>
+  <div id="centerDiv" class="center">
+    <p>Your text here</p>
+    <a href="https://twitter.com" target="_blank" class="icon"><i class="icon ion-logo-twitter"></i></a>
+    <a href="https://instagram.com" target="_blank" class="icon"><i class="icon ion-logo-instagram"></i></a>
+    <a href="https://facebook.com" target="_blank" class="icon"><i class="icon ion-logo-facebook"></i></a>
   </div>
 
   <script>
     var player;
-    var socialOverlay = document.getElementById('social-overlay');
-    var timeout;
+    var centerDiv = document.getElementById('centerDiv');
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -61,52 +61,24 @@
         videoId: 'mtvKGwJoE8A',
         playerVars: {
           autoplay: 0,
-          controls: 0, 
+          controls: 0,
           disablekb: 1,
           fs: 0,
           iv_load_policy: 3,
           modestbranding: 1,
           rel: 0,
           showinfo: 0
-        },
-        events: {
-          'onStateChange': onPlayerStateChange
         }
       });
     }
 
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        showOverlay();
-      } else {
-        hideOverlay();
-      }
+    document.body.onmousemove = function() {
+      centerDiv.style.display = 'block';
+      clearTimeout(centerDiv.dataset.timerId);
+      centerDiv.dataset.timerId = setTimeout(function() {
+        centerDiv.style.display = 'none';
+      }, 2000);
     }
-
-    function showOverlay() {
-  socialOverlay.style.visibility = 'visible';
-  socialOverlay.style.opacity = '1';
-}
-
-function hideOverlay() {
-  socialOverlay.style.visibility = 'hidden';
-  socialOverlay.style.opacity = '0';
-}
-
-
-    document.body.addEventListener('mousemove', function() {
-      if (player.getPlayerState() == YT.PlayerState.PLAYING) {
-        clearTimeout(timeout);
-        showOverlay();
-        timeout = setTimeout(hideOverlay, 2000); // 2秒後に非表示にする
-      }
-    });
-
-    document.body.addEventListener('click', function(event) {
-      if (event.target.id !== 'player' && event.target.id !== 'social-overlay') {
-        hideOverlay();
-      }
-    }, true);
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
