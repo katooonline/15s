@@ -78,10 +78,10 @@
       });
     }
 
-    /* Function to show social icons when mouse is at the left-bottom corner */
+    /* Function to show social icons when mouse is at the bottom-left corner */
     document.onmousemove = function(e) {
       var socialIcons = document.getElementById('social-icons');
-      if (e.pageX < 100 && e.pageY > (window.innerHeight - 100)) {
+      if (e.clientX < 100 && e.clientY > (window.innerHeight - 100)) {
         socialIcons.style.display = "flex";
       } else {
         socialIcons.style.display = "none";
