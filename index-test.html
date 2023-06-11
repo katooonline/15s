@@ -59,6 +59,7 @@
 
   <script>
     var player;
+    var timer = null; // Timer for inactivity
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -80,13 +81,17 @@
 
     /* Function to show social icons when mouse is at the left-bottom corner */
     document.onmousemove = function(e) {
+      clearTimeout(timer); // Clear the previous timer
       var socialIcons = document.getElementById('social-icons');
       if (e.clientY > (window.innerHeight * 0.75) && e.clientX < (window.innerWidth * 0.25)) {
         socialIcons.style.display = "flex";
       } else {
         socialIcons.style.display = "none";
       }
-    }
+      timer = setTimeout(function() {
+        socialIcons.style.display = "none";
+      }, 3000); // If there is no activity for 3 seconds, hide the icons
+    };
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 
