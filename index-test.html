@@ -79,9 +79,13 @@
     var timeout = null;
     function showSocialIcons() {
       var socialIcons = document.getElementById('social-icons');
-      socialIcons.style.display = "block";
 
       clearTimeout(timeout); // Clear the previous timer first
+
+      // If the social icons are not visible, show them immediately
+      if (socialIcons.style.display !== "block") {
+        socialIcons.style.display = "block";
+      }
 
       // Set a new timer to hide the social icons after 3 seconds
       timeout = setTimeout(function() {
