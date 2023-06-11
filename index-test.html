@@ -35,7 +35,7 @@
       position: absolute;
       bottom: 60px; /* Slightly above the YouTube controls */
       left: 30px; /* Increase the left margin */
-      display: flex;
+      display: none; /* Initially, the icons are hidden */
       flex-direction: column;
       align-items: flex-start;
       color: #fff;
@@ -76,6 +76,16 @@
           showinfo: 0
         }
       });
+    }
+
+    /* Function to show social icons when mouse is at the left-bottom corner */
+    document.onmousemove = function(e) {
+      var socialIcons = document.getElementById('social-icons');
+      if (e.pageX < 100 && e.pageY > (window.innerHeight - 100)) {
+        socialIcons.style.display = "flex";
+      } else {
+        socialIcons.style.display = "none";
+      }
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
