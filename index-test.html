@@ -88,10 +88,21 @@
       if (event.data == YT.PlayerState.PLAYING || event.data == YT.PlayerState.BUFFERING) {
         // The player is playing the video, so show the icons
         socialIcons.style.display = "flex";
+        document.addEventListener('mousemove', handleMouseMove);
       } else {
         // The player is not playing the video, so hide the icons
         socialIcons.style.display = "none";
+        document.removeEventListener('mousemove', handleMouseMove);
       }
+    }
+
+    function handleMouseMove() {
+      var socialIcons = document.getElementById('social-icons');
+      socialIcons.style.display = "flex";
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        socialIcons.style.display = "none";
+      }, 3000); // Hide icons after 3 seconds of inactivity
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
