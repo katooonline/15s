@@ -20,7 +20,7 @@
       background-color: black;
     }
 
-    #player {
+    #player, #socialPage {
       position: absolute;
       top: 0;
       left: 0;
@@ -30,20 +30,29 @@
       height: 100%;
     }
 
+    #player {
+      z-index: 1;
+    }
+
+    #socialPage {
+      z-index: 0;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
     /* Style for the social icons */
     .social-icons {
-      position: absolute;
-      bottom: 60px; /* Slightly above the YouTube controls */
-      left: 30px; /* Increase the left margin */
-      opacity: 0; /* Initially, the icons are hidden */
-      transition: opacity 1s;
-      flex-direction: column;
-      align-items: flex-start;
+      margin-top: -50px;
       color: #fff;
+      flex-direction: column;
     }
+
     .social-icons a {
       margin: 10px 0;
-      font-size: 20px;
+      font-size: 24px;
       color: #fff; /* Make the icon color always white */
     }
   </style>
@@ -51,16 +60,17 @@
 <body>
   <div id="player"></div>
 
-  <!-- Social icons -->
-  <div class="social-icons" id="social-icons">
-    <a href="https://twitter.com/username" target="_blank"><i class="fab fa-twitter"></i></a>
-    <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://facebook.com/username" target="_blank"><i class="fab fa-facebook-f"></i></a>
+  <div id="socialPage">
+    <!-- Social icons -->
+    <div class="social-icons" id="social-icons">
+      <a href="https://twitter.com/username" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com/username" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    </div>
   </div>
 
   <script>
     var player;
-    var timer = null; // Timer for inactivity
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -76,39 +86,20 @@
           modestbranding: 1,
           rel: 0,
           showinfo: 0
-        },
-        events: {
-          'onStateChange': onPlayerStateChange
         }
       });
     }
 
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING || event.data == YT.PlayerState.BUFFERING) {
-        document.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('wheel', function(e) {
+      if (e.deltaY > 0) {
+        document.getElementById('player').style.zIndex = 0;
+        document.getElementById('socialPage').style.zIndex = 1;
       } else {
-        document.removeEventListener('mousemove', handleMouseMove);
+        document.getElementById('player').style.zIndex = 1;
+        document.getElementById('socialPage').style.zIndex = 0;
       }
-    }
-
-    function handleMouseMove(e) {
-      var socialIcons = document.getElementById('social-icons');
-      socialIcons.style.left = e.pageX + 'px';
-      socialIcons.style.top = e.pageY + 'px';
-      socialIcons.style.opacity = 1;
-      clearTimeout(timer);
-      timer = setTimeout(function() {
-        socialIcons.style.opacity = 0;
-      }, 3000); // Fade out icons after 3 seconds of inactivity
-    }
-
-    document.addEventListener('DOMContentLoaded', (event) => {
-      document.addEventListener('mousemove', handleMouseMove);
     });
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
-
-  <!-- Add Bootstrap JS -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
