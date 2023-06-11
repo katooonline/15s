@@ -33,13 +33,15 @@
     /* Style for the social icons */
     .social-icons {
       position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 60px; /* Slightly above the YouTube controls */
+      left: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      color: #fff;
     }
     .social-icons a {
-      color: #fff;
-      margin: 0 10px;
+      margin: 10px 0;
       font-size: 20px;
     }
   </style>
@@ -54,48 +56,30 @@
     <a href="https://facebook.com/username" target="_blank"><i class="fab fa-facebook-f"></i></a>
   </div>
 
- <script>
-  var player;
+  <script>
+    var player;
 
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '100%',
-      width: '100%',
-      videoId: 'mtvKGwJoE8A',
-      playerVars: {
-        autoplay: 0,
-        controls: 1,
-        disablekb: 1,
-        fs: 1,
-        iv_load_policy: 3,
-        modestbranding: 1,
-        rel: 0,
-        showinfo: 0
-      }
-    });
-  }
-
-  // Function to show and hide social icons
-  var timeout = null;
-  function showSocialIcons() {
-    var socialIcons = document.getElementById('social-icons');
-    socialIcons.style.display = "block";
-
-    // clear the previous timer if there is one
-    if(timeout) {
-      clearTimeout(timeout);
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        videoId: 'mtvKGwJoE8A',
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          disablekb: 1,
+          fs: 1,
+          iv_load_policy: 3,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0
+        }
+      });
     }
-    // create a new timer that waits for 3 seconds of inactivity
-    timeout = setTimeout(function() {
-      socialIcons.style.display = "none";
-    }, 3000);
-  }
-  // add event listener for mousemove
-  document.addEventListener('mousemove', showSocialIcons);
-</script>
-<script src="https://www.youtube.com/iframe_api"></script>
+  </script>
+  <script src="https://www.youtube.com/iframe_api"></script>
 
-<!-- Add Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Add Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
