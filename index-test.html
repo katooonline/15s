@@ -35,7 +35,8 @@
       position: absolute;
       bottom: 60px; /* Slightly above the YouTube controls */
       left: 30px; /* Increase the left margin */
-      display: none; /* Initially, the icons are hidden */
+      opacity: 0; /* Initially, the icons are hidden */
+      transition: opacity 1s;
       flex-direction: column;
       align-items: flex-start;
       color: #fff;
@@ -90,13 +91,15 @@
       }
     }
 
-    function handleMouseMove() {
+    function handleMouseMove(e) {
       var socialIcons = document.getElementById('social-icons');
-      socialIcons.style.display = "flex";
+      socialIcons.style.left = e.pageX + 'px';
+      socialIcons.style.top = e.pageY + 'px';
+      socialIcons.style.opacity = 1;
       clearTimeout(timer);
       timer = setTimeout(function() {
-        socialIcons.style.display = "none";
-      }, 3000); // Hide icons after 3 seconds of inactivity
+        socialIcons.style.opacity = 0;
+      }, 3000); // Fade out icons after 3 seconds of inactivity
     }
 
     document.addEventListener('DOMContentLoaded', (event) => {
