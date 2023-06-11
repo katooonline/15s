@@ -48,7 +48,7 @@
   <div id="player"></div>
 
   <!-- Social icons -->
-  <div class="social-icons">
+  <div class="social-icons" id="social-icons">
     <a href="https://twitter.com/username" target="_blank"><i class="fab fa-twitter"></i></a>
     <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
     <a href="https://facebook.com/username" target="_blank"><i class="fab fa-facebook-f"></i></a>
@@ -73,6 +73,19 @@
           showinfo: 0
         }
       });
+    }
+
+    // Function to show and hide social icons
+    var timeout = null;
+    document.onmousemove = function(){
+      clearTimeout(timeout);
+
+      var socialIcons = document.getElementById('social-icons');
+      socialIcons.style.display = "block";
+
+      timeout = setTimeout(function(){
+        socialIcons.style.display = "none";
+      }, 3000);
     }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
