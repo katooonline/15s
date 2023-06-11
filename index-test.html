@@ -77,7 +77,7 @@
 
     // Function to show and hide social icons
     var timeout = null;
-    document.onmousemove = function(){
+    function showSocialIcons() {
       clearTimeout(timeout);
 
       var socialIcons = document.getElementById('social-icons');
@@ -87,6 +87,8 @@
         socialIcons.style.display = "none";
       }, 3000);
     }
+    document.onmousemove = showSocialIcons;
+    document.onmouseover = showSocialIcons;
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 
