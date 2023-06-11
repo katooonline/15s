@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>15s</title>
   <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
-  
+
   <!-- Add Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -78,12 +78,13 @@
     // Function to show and hide social icons
     var timeout = null;
     function showSocialIcons() {
-      clearTimeout(timeout);
-
       var socialIcons = document.getElementById('social-icons');
       socialIcons.style.display = "block";
 
-      timeout = setTimeout(function(){
+      clearTimeout(timeout); // Clear the previous timer first
+
+      // Set a new timer to hide the social icons after 3 seconds
+      timeout = setTimeout(function() {
         socialIcons.style.display = "none";
       }, 3000);
     }
