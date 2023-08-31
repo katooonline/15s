@@ -12,32 +12,35 @@
       background-color: black;
       color: white;
       font-family: Arial, sans-serif;
-      overflow-x: hidden; /* Prevent horizontal scroll */
-    }
-
-    #player-container {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%; /* 16:9 aspect ratio (height/width) */
       overflow: hidden;
     }
 
-    #player {
-      position: absolute;
+    #player-container {
+      position: fixed;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    #player {
       width: 100%;
       height: 100%;
     }
 
     #social-links {
-      text-align: center;
-      padding: 20px 0;
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      text-align: right;
+      z-index: 100;
     }
 
     .social-icon {
-      display: inline-block;
-      margin: 0 10px;
+      display: block;
+      margin-bottom: 10px;
       font-size: 24px;
     }
 
@@ -62,15 +65,5 @@
       <a href="https://instagram.com/15s_mov"><i class="fab fa-instagram"></i></a>
     </div>
   </div>
-  
-  <script>
-    // Enable autoplay on user interaction
-    document.body.addEventListener('click', function() {
-      var iframe = document.querySelector('iframe');
-      if (iframe) {
-        iframe.src = iframe.src;
-      }
-    });
-  </script>
 </body>
 </html>
