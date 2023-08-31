@@ -79,12 +79,28 @@
       document.getElementById("player").style.transform = "translateX(" + xOffset + "%)";
     }
 
-    setInterval(function() {
-      slideIndex++;
-      showSlide(slideIndex);
-    }, 5000); // Change slide every 5 seconds
+    var wheeling = false;
 
-    // You can add event listeners for user interaction to change slides
+    window.addEventListener("wheel", function(event) {
+      if (!wheeling) {
+        wheeling = true;
+
+        if (event.deltaY > 0) {
+          slideIndex++;
+        } else {
+          slideIndex--;
+        }
+
+        showSlide(slideIndex);
+
+        setTimeout(function() {
+          wheeling = false;
+        }, 500); // Delay to prevent rapid scrolling
+      }
+
+      event.preventDefault();
+    });
+
   </script>
 </body>
 </html>
