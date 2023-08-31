@@ -65,5 +65,16 @@
       <a href="https://instagram.com/15s_mov" target="_blank"><i class="fab fa-instagram"></i></a>
     </div>
   </div>
+  
+  <script>
+    // Enable autoplay on user interaction
+    document.addEventListener('click', function() {
+      var iframe = document.querySelector('iframe');
+      if (iframe && !iframe.getAttribute('data-loaded')) {
+        iframe.src = iframe.src + "&autoplay=1";
+        iframe.setAttribute('data-loaded', true);
+      }
+    });
+  </script>
 </body>
 </html>
