@@ -4,13 +4,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>15s</title>
   <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
-
-  <!-- Add Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Add Font Awesome CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
   <style>
     body, html {
       height: 100%;
@@ -20,7 +13,7 @@
       background-color: black;
     }
 
-    #player, #socialPage {
+    #player {
       position: absolute;
       top: 0;
       left: 0;
@@ -30,43 +23,27 @@
       height: 100%;
     }
 
-    #player {
-      z-index: 1;
+    #social-icons {
+      position: fixed;
+      top: 50%;
+      right: -50px; /* Initial position, hidden */
+      transform: translateY(-50%);
+      transition: right 0.3s ease-in-out;
     }
 
-    #socialPage {
-      z-index: 0;
-      background-color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    /* Style for the social icons */
-    .social-icons {
-      margin-top: -50px;
-      color: #fff;
-      flex-direction: column;
-    }
-
-    .social-icons a {
-      margin: 10px 0;
-      font-size: 24px;
-      color: #fff; /* Make the icon color always white */
+    .social-icon {
+      display: block;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
   <div id="player"></div>
-
-  <div id="socialPage">
-    <!-- Social icons -->
-    <div class="social-icons" id="social-icons">
-      <a href="https://twitter.com/username" target="_blank"><i class="fab fa-twitter"></i></a>
-      <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://facebook.com/username" target="_blank"><i class="fab fa-facebook-f"></i></a>
-    </div>
+  
+  <div id="social-icons">
+    <a class="social-icon" href="#"><img src="social_icon1.png" alt="Social Icon 1"></a>
+    <a class="social-icon" href="#"><img src="social_icon2.png" alt="Social Icon 2"></a>
+    <!-- Add more social icons as needed -->
   </div>
 
   <script>
@@ -76,11 +53,11 @@
       player = new YT.Player('player', {
         height: '100%',
         width: '100%',
-        videoId: 'mtvKGwJoE8A',
+        videoId: 'EzJzyEhhHyk',
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 1,
-          disablekb: 0, /* Enable keyboard controls */
+          disablekb: 1,
           fs: 1,
           iv_load_policy: 3,
           modestbranding: 1,
@@ -88,17 +65,13 @@
           showinfo: 0
         }
       });
-    }
 
-    window.addEventListener('wheel', function(e) {
-      if (e.deltaY > 0) {
-        document.getElementById('player').style.zIndex = 0;
-        document.getElementById('socialPage').style.zIndex = 1;
-      } else {
-        document.getElementById('player').style.zIndex = 1;
-        document.getElementById('socialPage').style.zIndex = 0;
-      }
-    });
+      window.addEventListener('scroll', function() {
+        var scrollAmount = window.scrollX;
+        var socialIcons = document.getElementById('social-icons');
+        socialIcons.style.right = -scrollAmount + 'px';
+      });
+    }
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
