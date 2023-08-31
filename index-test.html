@@ -38,12 +38,12 @@
     .social-icon {
       display: inline-block;
       margin: 0 10px;
+      font-size: 24px;
     }
 
     .social-icon a {
       color: white;
       text-decoration: none;
-      font-size: 24px;
     }
   </style>
 </head>
@@ -62,5 +62,15 @@
       <a href="https://instagram.com/15s_mov"><i class="fab fa-instagram"></i></a>
     </div>
   </div>
+  
+  <script>
+    // Enable autoplay on user interaction
+    document.body.addEventListener('click', function() {
+      var iframe = document.querySelector('iframe');
+      if (iframe) {
+        iframe.src = iframe.src;
+      }
+    });
+  </script>
 </body>
 </html>
