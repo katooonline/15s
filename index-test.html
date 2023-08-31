@@ -6,33 +6,32 @@
   <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
   <style>
     body, html {
-      height: 100%;
       margin: 0;
       padding: 0;
       background-color: black;
-      overflow: hidden;
+      color: white;
+      font-family: Arial, sans-serif;
     }
 
     #player-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 aspect ratio (height/width) */
+      overflow: hidden;
+    }
+
+    #player {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
     }
 
-    #player {
-      width: 100%;
-      height: 100%;
-      white-space: nowrap;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    #player div {
-      display: inline-block;
-      width: 100%;
-      height: 100%;
+    #content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
     }
 
     #social-icons {
@@ -52,10 +51,14 @@
 <body>
   <div id="player-container">
     <div id="player">
-      <div><iframe width="100%" height="100%" src="https://www.youtube.com/embed/EzJzyEhhHyk?autoplay=1&controls=1&disablekb=1&fs=1&iv_load_policy=3&modestbranding=1&rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe></div>
-      <div><!-- Add more content here --></div>
-      <!-- Add more slides here -->
+      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/EzJzyEhhHyk?autoplay=1&controls=1&disablekb=1&fs=1&iv_load_policy=3&modestbranding=1&rel=0&showinfo=0" frameborder="0" allowfullscreen></iframe>
     </div>
+  </div>
+
+  <div id="content">
+    <h1>Welcome to the Page</h1>
+    <p>This is some content below the YouTube live stream.</p>
+    <!-- Add more content here -->
   </div>
 
   <div id="social-icons">
@@ -63,44 +66,5 @@
     <a class="social-icon" href="#"><img src="social_icon2.png" alt="Social Icon 2"></a>
     <!-- Add more social icons as needed -->
   </div>
-
-  <script>
-    var slideIndex = 0;
-    var slides = document.querySelectorAll("#player div");
-
-    function showSlide(index) {
-      if (index >= slides.length) {
-        slideIndex = 0;
-      } else if (index < 0) {
-        slideIndex = slides.length - 1;
-      }
-
-      var xOffset = -slideIndex * 100;
-      document.getElementById("player").style.transform = "translateX(" + xOffset + "%)";
-    }
-
-    var wheeling = false;
-
-    window.addEventListener("wheel", function(event) {
-      if (!wheeling) {
-        wheeling = true;
-
-        if (event.deltaY > 0) {
-          slideIndex++;
-        } else {
-          slideIndex--;
-        }
-
-        showSlide(slideIndex);
-
-        setTimeout(function() {
-          wheeling = false;
-        }, 500); // Delay to prevent rapid scrolling
-      }
-
-      event.preventDefault();
-    });
-
-  </script>
 </body>
 </html>
