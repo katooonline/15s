@@ -57,7 +57,8 @@
         },
         events: {
           'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
+          'onStateChange': onPlayerStateChange,
+          'onError': onPlayerError
         }
       });
     }
@@ -67,18 +68,19 @@
     }
 
     function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.UNSTARTED) {
-        // Check if the video is unavailable
-        setTimeout(function() {
-          if (player.getPlayerState() == -1) {
-            document.getElementById('offline-message').style.display = 'block';
-            document.getElementById('player').style.display = 'none';
-          }
-        }, 1000); // Wait for 1 second to ensure it's not just loading
-      } else if (event.data == YT.PlayerState.PLAYING) {
+      if (event.data == YT.PlayerState.PLAYING) {
         // Hide the message if the video starts playing
         document.getElementById('offline-message').style.display = 'none';
         document.getElementById('player').style.display = 'block';
+      }
+    }
+
+    function onPlayerError(event) {
+      // Error codes that might indicate an offline or unavailable stream
+      var errorCodes = [2, 5, 100, 101, 150];
+      if (errorCodes.includes(event.data)) {
+        document.getElementById('offline-message').style.display = 'block';
+        document.getElementById('player').style.display = 'none';
       }
     }
   </script>
