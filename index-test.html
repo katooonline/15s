@@ -20,7 +20,7 @@
       background: #000;
       overflow: hidden;
     }
-    /* iframe を container 全体に広げ、object-fit で比率維持 */
+    /* iframe を container 全体に広げ、object-fit: contain で比率維持 */
     #player {
       width: 100%;
       height: 100%;
@@ -97,6 +97,7 @@
   <!-- YouTube IFrame API -->
   <script>
     function onYouTubeIframeAPIReady() {
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       var player = new YT.Player('player', {
         videoId: 'rYnMVy4NChQ',
         playerVars: {
@@ -112,7 +113,12 @@
         },
         events: {
           'onReady': function(event) {
-            event.target.mute(); // 常にミュート状態にする
+            if (isMobile) {
+              event.target.mute(); // スマホではミュート
+            } else {
+              event.target.unMute(); // デスクトップでは音声オンを試みる
+              event.target.playVideo(); // 自動再生の試行
+            }
           }
         }
       });
