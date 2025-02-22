@@ -20,49 +20,54 @@
     }
     /* 全画面動画セクション */
     .video-section {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  background: #000;
-}
-#player {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* 比率固定の代わりに常に100%表示 → 黒帯が出ることがある */
-}
-
-
-    /* ▼ 通常コンテンツエリア ▼ */
+      position: relative;
+      width: 100%;
+      height: 100vh; /* デフォルトは全画面 */
+      overflow: hidden;
+      background: #000;
+    }
+    /* 動画表示部分：16:9比率をできるだけ維持しつつ中央配置 */
+    .video-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 177.78vh; /* 高さ基準の計算（16/9） */
+      height: 100vh;
+    }
+    @media (min-aspect-ratio: 16/9) {
+      .video-container {
+        width: 100vw;
+        height: 56.25vw; /* 横幅基準の計算（9/16） */
+      }
+    }
+    #player {
+      width: 100%;
+      height: 100%;
+    }
+    /* スマホ向け：動画セクションの高さを縮小して下部テキストを見やすくする */
+    @media (max-width: 768px) {
+      .video-section {
+        height: 50vh;
+      }
+      .video-container {
+        width: 100vw;
+        height: 56.25vw;
+      }
+    }
+    /* 通常コンテンツエリア */
     .content-section {
       background-color: #333333;
       color: #fff;
       text-align: center;
       padding: 40px 20px;
     }
-    .social-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 40px;
+    /* 説明テキストエリア */
+    .description-placeholder p {
+      margin-bottom: 1em;  /* 段落ごとに余白を追加 */
+      line-height: 1.5;
     }
-    .social-links a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: opacity 0.2s;
-    }
-    .social-links a:hover {
-      opacity: 0.7;
-    }
-    .description-placeholder {
-      margin: 40px 0;
-      min-height: 100px; /* 必要に応じて調整 */
-    }
+    /* フッターエリア */
     .footer {
       margin-top: 40px;
       font-size: 0.8rem;
@@ -84,40 +89,27 @@
 
   <!-- 通常コンテンツエリア -->
   <section class="content-section">
-    <!-- ソーシャルリンク (文字のみ) -->
-    <div class="social-links">
-      <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer">X</a>
-      <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://www.tiktok.com/@15s_mov" target="_blank" rel="noopener noreferrer">TikTok</a>
+    <!-- 説明テキストエリア（プレースホルダー） -->
+    <div class="description-placeholder">
+      <p>15秒のスナップを毎時間SNS投稿しています。<br>
+      ここではそれらのビデオクリップをランダムで再生しています。</p>
+      <p>I post a 15-second video snap on social media every hour.<br>
+      Here, these video snaps are played in random order.</p>
     </div>
-
-   <!-- 説明テキストエリア（プレースホルダー） -->
-<div class="description-placeholder">
-  <p>
-    15秒のスナップを毎時間SNS投稿しています。<br>
-    ここではそれらのビデオクリップをランダムで再生しています。
-  </p>
-  <p>
-    I post a 15-second video snap on social media every hour.<br>
-    Here, these video snaps are played in random order.
-  </p>
-</div>
 
     <!-- フッターエリア -->
     <div class="footer">
-      ©Takafumi Kato
-      <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">@katooonline.com</a>
+      <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Takafumi Kato</a>
     </div>
   </section>
 
-  <!-- ▼ YouTube IFrame API: 自動再生＆ミュート設定 ▼ -->
+  <!-- YouTube IFrame API（スマホでは自動再生を無効にする場合は、playerVarsのautoplayを0に変更してください） -->
   <script>
     function onYouTubeIframeAPIReady() {
       var player = new YT.Player('player', {
         videoId: 'rYnMVy4NChQ',
         playerVars: {
-          autoplay: 1,
+          autoplay: 1,  // スマホ向けならここを0にしても良い
           controls: 1,
           disablekb: 1,
           fs: 1,
@@ -128,7 +120,7 @@
         },
         events: {
           'onReady': function(event) {
-            event.target.mute(); // ミュートして自動再生
+            event.target.mute(); // ミュートして自動再生を許可
           }
         }
       });
@@ -136,7 +128,7 @@
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 
-  <!-- ▼ Google タグ (gtag.js) ※必要に応じて設定 ▼ -->
+  <!-- Google タグ (gtag.js) ※必要に応じて設定 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
