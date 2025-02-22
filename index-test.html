@@ -34,8 +34,22 @@
       text-align: center;
       padding: 40px 20px;
     }
+    .title {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 1em; /* 説明部分との間に余白 */
+    }
+    .description-placeholder {
+      font-size: 0.8rem;
+      margin-bottom: 1em;
+    }
+    .description-placeholder p {
+      margin-bottom: 1em;
+      line-height: 1.5;
+    }
     .social-links {
       margin-bottom: 20px;
+      font-size: 0.8rem;
     }
     .social-links a {
       display: inline-block;
@@ -46,17 +60,11 @@
       color: #fff;
       text-decoration: none;
       margin: 5px;
-      font-size: 0.8rem;
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
     .social-links a:hover {
       background-color: #777;
       transform: scale(1.05);
-    }
-    .description-placeholder p {
-      margin-bottom: 1em;
-      line-height: 1.5;
-      font-size: 0.8rem;
     }
     .footer {
       margin-top: 40px;
@@ -67,11 +75,11 @@
       text-decoration: underline;
     }
 
-    /* スマホ向け調整：動画セクションの高さを縮小＆タッチブロックを解除 */
+    /* スマホ向け調整：動画セクションの高さを縮小 */
     @media (max-width: 768px) {
       .video-section {
         height: 50vh;
-        pointer-events: none; /* タッチ操作が動画に奪われないように */
+        /* pointer-events を削除し、タップ操作を有効に */
       }
     }
   </style>
@@ -84,12 +92,8 @@
   
   <!-- 通常コンテンツエリア -->
   <section class="content-section">
-    <!-- ソーシャルリンクエリア -->
-    <div class="social-links">
-      <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer">X</a>
-      <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer">Instagram</a>
-    </div>
+    <!-- タイトル -->
+    <div class="title">15s</div>
     
     <!-- 説明テキストエリア -->
     <div class="description-placeholder">
@@ -101,6 +105,13 @@
         I post a 15-second video snap on social media every hour.<br>
         Here, these video snaps are played in random order.
       </p>
+    </div>
+    
+    <!-- ソーシャルリンクエリア -->
+    <div class="social-links">
+      <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
     
     <!-- フッターエリア -->
