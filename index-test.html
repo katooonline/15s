@@ -115,7 +115,7 @@
     
     <!-- フッターエリア -->
     <div class="footer">
-      video project by <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a>
+      <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a>
     </div>
   </section>
   
@@ -139,7 +139,8 @@
         events: {
           'onReady': function(event) {
             if (isMobile) {
-              event.target.mute(); // スマホはミュート
+              event.target.unmute(); // スマホは音声オンを試みる
+              event.target.playVideo(); // 自動再生の試行
             } else {
               event.target.unMute(); // デスクトップは音声オンを試みる
               event.target.playVideo(); // 自動再生の試行
