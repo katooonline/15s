@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:image" content="https://15s.mov/15s.jpg" />
+  <meta charset="UTF-8" />
   <title>15s</title>
   <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
+  <meta property="og:image" content="https://15s.mov/15s.jpg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
     /* ベースリセット */
     * {
@@ -21,57 +22,59 @@
     .video-section {
       position: relative;
       width: 100%;
-      height: 100vh;
+      height: 100vh; /* ビューポート高さ分 */
       overflow: hidden;
+      background: #000; /* 背景黒 */
+    }
+    /* ▼ 16:9比率を維持しつつ、なるべく拡大する方法 (カバー的アプローチ) ▼ */
+    .video-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* 16:9を維持するための仕組み */
+      width: 177.78vh; /* 16/9 = 1.7778… → 高さ基準にして横幅を計算 */
+      height: 100vh;
+    }
+    /* 画面が横長の場合に高さ基準だと足りないことがあるので、メディアクエリで調整 */
+    @media (min-aspect-ratio: 16/9) {
+      .video-container {
+        width: 100vw;
+        height: 56.25vw; /* 9/16 = 0.5625 → 横幅基準にして高さを計算 */
+      }
     }
     #player {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
     }
-    /* 通常コンテンツエリア */
+
+    /* ▼ 通常コンテンツエリア ▼ */
     .content-section {
       background-color: #333333;
       color: #fff;
       text-align: center;
       padding: 40px 20px;
     }
-    /* ソーシャルアイコンコンテナ */
-    .social-icons {
+    .social-links {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
-      gap: 30px;
+      justify-content: center;
+      gap: 20px;
       margin-bottom: 40px;
     }
-    .social-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .social-links a {
+      color: #fff;
       text-decoration: none;
-      color: inherit;
-      transition: transform 0.2s;
+      font-size: 1rem;
+      transition: opacity 0.2s;
     }
-    .social-item:hover {
-      transform: scale(1.05);
+    .social-links a:hover {
+      opacity: 0.7;
     }
-    .social-item svg {
-      width: 40px;
-      height: 40px;
-      margin-bottom: 5px;
-      fill: currentColor; /* テキスト色に合わせる */
-    }
-    .social-name {
-      font-size: 0.8rem;
-    }
-    /* 説明テキストエリアのプレースホルダー */
     .description-placeholder {
       margin: 40px 0;
       min-height: 100px; /* 必要に応じて調整 */
     }
-    /* フッターエリア */
     .footer {
       margin-top: 40px;
       font-size: 0.8rem;
@@ -83,79 +86,40 @@
   </style>
 </head>
 <body>
+
   <!-- 全画面動画セクション -->
   <section class="video-section">
-    <div id="player"></div>
+    <div class="video-container">
+      <div id="player"></div>
+    </div>
   </section>
 
   <!-- 通常コンテンツエリア -->
   <section class="content-section">
-    <!-- ソーシャルアイコンエリア -->
-    <div class="social-icons">
-      <!-- YouTube -->
-      <a class="social-item" href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer">
-        <!-- Font Awesome: fa-brands fa-youtube -->
-        <svg viewBox="0 0 576 512" aria-hidden="true">
-          <path d="M549.65 124.08C543.37 100.52 525 82 501.44 75.72 466.36 64 288 64 288 64S109.64 64 74.56 75.72C51 82 32.63 100.52 26.35 124.08 16 160.36 16 256 16 256s0 95.64 10.35 131.92c6.28 23.56 24.65 42.08 48.21 48.36C109.64 448 288 448 288 448s178.36 0 213.44-11.72c23.56-6.28 41.93-24.8 48.21-48.36C560 351.64 560 256 560 256s0-95.64-10.35-131.92zM232 336l142.88-80L232 176v160z"/>
-        </svg>
-        <div class="social-name">@15seconds</div>
-      </a>
-
-      <!-- X (Twitter) -->
-      <a class="social-item" href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer">
-        <!-- Font Awesome: fa-brands fa-twitter（アイコン名はtwitterですがラベルはX） -->
-        <svg viewBox="0 0 512 512" aria-hidden="true">
-          <path d="M459.37 151.716c.325 4.548 0 9.097- .113 13.63 0 138.72-105.583 298.558-298.558 298.558 -59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34.488 49.055- .325 94.213-16.568 130.274-44.832-46.132- .974-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843- 1.299 27.614-3.573 -48.081-9.747-84.143-51.98-84.143-103.001v-1.299c13.969 7.797 30.188 12.67 47.431 13.319 -28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807 -1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.188 0 57.502 12.67 76.67 33.137 23.715-4.548 46.132-13.32 66.599-25.34 -7.797 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243 -14.292 20.791-32.161 39.308-52.628 54.253z"/>
-        </svg>
-        <div class="social-name">@15s_mov</div>
-      </a>
-
-      <!-- Instagram -->
-      <a class="social-item" href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer">
-        <!-- Font Awesome: fa-brands fa-instagram -->
-        <svg viewBox="0 0 448 512" aria-hidden="true">
-          <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9S160.5 370.9 224.1 370.9 339 319.6 339 256 287.7 141 224.1 141zm0 190.5c-41.7 0-75.6-33.9-75.6-75.6 0-41.7 33.9-75.6 75.6-75.6 41.7 0 75.6 33.9 75.6 75.6 0 41.7-33.9 75.6-75.6 75.6zm146.4-194.3c0 14.9-12.1 27-27 27 -14.9 0-27-12.1-27-27 0-14.9 12.1-27 27-27 14.9 0 27 12.1 27 27zm76.1 27.2c-.2-36.4-1-72.6-20.6-99.7 -17.2-24.1-43.1-40.8-72.5-46.3C316.7 16 224.1 16 224.1 16s-92.6 0-129.4 2.7c-29.4 5.5-55.3 22.2-72.5 46.3 -19.6 27.1-20.4 63.3-20.6 99.7C1 193.7 0 231.5 0 256.1c0 24.3 1 62.5 1.6 89.1 .2 36.4 1 72.6 20.6 99.7 17.2 24.1 43.1 40.8 72.5 46.3C131.5 512 224.1 512 224.1 512s92.6 0 129.4-2.7c29.4-5.5 55.3-22.2 72.5-46.3 19.6-27.1 20.4-63.3 20.6-99.7 .6-26.6 1.6-64.8 1.6-89.1 0-24.6-1-62.4-1.6-89z"/>
-        </svg>
-        <div class="social-name">@15s_mov</div>
-      </a>
-
-      <!-- Facebook -->
-      <a class="social-item" href="https://www.facebook.com/15s.fb" target="_blank" rel="noopener noreferrer">
-        <!-- Font Awesome: fa-brands fa-facebook-f -->
-        <svg viewBox="0 0 320 512" aria-hidden="true">
-          <path d="M279.14 288l14.22-92.66h-88.91V141.33c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S277.2 0 240.84 0c-73.22 0-121.2 44.64-121.2 124.72v70.62H32v92.66h87.64V512h107.8V288z"/>
-        </svg>
-        <div class="social-name">@15s.fb</div>
-      </a>
-
-      <!-- TikTok -->
-      <a class="social-item" href="https://www.tiktok.com/@15s_mov" target="_blank" rel="noopener noreferrer">
-        <!-- Font Awesome: fa-brands fa-tiktok -->
-        <svg viewBox="0 0 448 512" aria-hidden="true">
-          <path d="M448,209.2c-8.27,0-16.4-.5-24.5-1.5-1.2-.2-2.3-.3-3.5-.5-27.8-3.6-52.7-14.4-72.6-30.6-20.8-16.9-35.8-39.4-43.9-65.2-2.4-7.8-4.1-15.7-5.2-23.8-.6-4.3-.9-8.6-1.1-12.9V0H224V96c0,17.7,14.3,32,32,32h26.7c10.9,37.4,40.9,67.5,78.3,78.4v8.8c0,88.2-71.8,160-160,160-14.2,0-27.9-1.9-41-5.4-44.6-12.3-79.7-47.4-92-92-3.5-13.1-5.4-26.8-5.4-41,0-48.3,32.9-88.8,77.5-100.7,9.4-2.4,19.3-3.7,29.5-3.7,17.7,0,34.2,4.4,48.7,12.1v-61c-14.7-2.4-29.7-3.6-45-3.6-8.3,0-16.5.4-24.6,1.3C108,81.2,59.2,115.8,31.4,166.5c-13.4,24.2-20.7,51.8-20.4,81.3.3,29.3,7.7,56.7,21,80.7,37,66.2,108,110.2,189,110.5,124.6.5,225.1-101.1,225.1-225.6V209.2Z"/>
-        </svg>
-        <div class="social-name">@15s_mov</div>
-      </a>
+    <!-- ソーシャルリンク (文字のみ) -->
+    <div class="social-links">
+      <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.tiktok.com/@15s_mov" target="_blank" rel="noopener noreferrer">TikTok</a>
     </div>
 
     <!-- 説明テキストエリア（プレースホルダー） -->
     <div class="description-placeholder">
-      <!-- ここに任意の説明テキストを入れてください -->
+      <!-- ここに説明テキストなどを追加 -->
     </div>
 
     <!-- フッターエリア -->
     <div class="footer">
-      video project by Kato Takafumi 
+      video project by Kato Takafumi
       <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">@katooonline.com</a>
     </div>
   </section>
 
-  <!-- YouTube IFrame APIと自動再生・ミュートの設定 -->
+  <!-- ▼ YouTube IFrame API: 自動再生＆ミュート設定 ▼ -->
   <script>
     function onYouTubeIframeAPIReady() {
       var player = new YT.Player('player', {
-        height: '100%',
-        width: '100%',
         videoId: 'rYnMVy4NChQ',
         playerVars: {
           autoplay: 1,
@@ -169,7 +133,7 @@
         },
         events: {
           'onReady': function(event) {
-            event.target.mute(); // ミュート状態にして自動再生を許可
+            event.target.mute(); // ミュートして自動再生
           }
         }
       });
@@ -177,7 +141,7 @@
   </script>
   <script src="https://www.youtube.com/iframe_api"></script>
 
-  <!-- Google タグ (gtag.js) -->
+  <!-- ▼ Google タグ (gtag.js) ※必要に応じて設定 ▼ -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
