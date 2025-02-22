@@ -1,60 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>15s</title>
   <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
   <meta property="og:image" content="https://15s.mov/15s.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    /* ベースリセット */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
-      font-family: sans-serif;
-      background-color: #000;
-    }
-    /* 全画面動画セクション */
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { font-family: sans-serif; background-color: #000; }
+
+    /* 全画面動画セクション（16:9比率を維持するインストリック比率テクニック） */
     .video-section {
-      position: relative;
       width: 100%;
-      height: 100vh; /* デフォルトは全画面 */
-      overflow: hidden;
+      position: relative;
       background: #000;
     }
-    /* 動画表示部分：16:9比率をできるだけ維持しつつ中央配置 */
     .video-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 177.78vh; /* 高さ基準の計算（16/9） */
-      height: 100vh;
-    }
-    @media (min-aspect-ratio: 16/9) {
-      .video-container {
-        width: 100vw;
-        height: 56.25vw; /* 横幅基準の計算（9/16） */
-      }
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 の比率 */
     }
     #player {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
     }
-    /* スマホ向け：動画セクションの高さを縮小して下部テキストを見やすくする */
-    @media (max-width: 768px) {
-      .video-section {
-        height: 50vh;
-      }
-      .video-container {
-        width: 100vw;
-        height: 56.25vw;
-      }
-    }
+
     /* 通常コンテンツエリア */
     .content-section {
       background-color: #333333;
@@ -62,7 +38,6 @@
       text-align: center;
       padding: 40px 20px;
     }
-    /* ソーシャルリンクエリア */
     .social-links {
       margin-bottom: 20px;
     }
@@ -76,12 +51,10 @@
     .social-links a:hover {
       opacity: 0.7;
     }
-    /* 説明テキストエリア */
     .description-placeholder p {
-      margin-bottom: 1em;  /* 段落ごとに余白を追加 */
+      margin-bottom: 1em;
       line-height: 1.5;
     }
-    /* フッターエリア */
     .footer {
       margin-top: 40px;
       font-size: 0.8rem;
@@ -90,10 +63,16 @@
       color: #fff;
       text-decoration: underline;
     }
+
+    /* スマホ向け調整（動画セクションの高さを縮小） */
+    @media (max-width: 768px) {
+      .video-section {
+        height: 50vh;
+      }
+    }
   </style>
 </head>
 <body>
-
   <!-- 全画面動画セクション -->
   <section class="video-section">
     <div class="video-container">
@@ -108,6 +87,7 @@
       <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer">YouTube</a>
       <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer">X</a>
       <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.tiktok.com/@15s_mov" target="_blank" rel="noopener noreferrer">TikTok</a>
     </div>
 
     <!-- 説明テキストエリア -->
@@ -120,48 +100,14 @@
 
     <!-- フッターエリア -->
     <div class="footer">
-      <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Takafumi Kato</a>
+      video project by <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a>
     </div>
   </section>
 
   <!-- YouTube IFrame API -->
   <script>
-  function onYouTubeIframeAPIReady() {
-    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    var player = new YT.Player('player', {
-      videoId: 'rYnMVy4NChQ',
-      playerVars: {
-        autoplay: 1,
-        controls: 1,
-        disablekb: 1,
-        fs: 1,
-        iv_load_policy: 3,
-        modestbranding: 1,
-        rel: 0,
-        showinfo: 0
-      },
-      events: {
-        'onReady': function(event) {
-          if (isMobile) {
-            event.target.mute(); // スマホではミュート
-          } else {
-            event.target.unMute(); // デスクトップでは音を出す
-          }
-        }
-      }
-    });
-  }
-</script>
-<script src="https://www.youtube.com/iframe_api"></script>
-
-
-  <!-- Google タグ (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-3LJ8BTZGZV');
-  </script>
-</body>
-</html>
+    function onYouTubeIframeAPIReady() {
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      var player = new YT.Player('player', {
+        videoId: 'rYnMVy4NChQ',
+  
