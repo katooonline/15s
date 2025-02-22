@@ -20,33 +20,21 @@
     }
     /* 全画面動画セクション */
     .video-section {
-      position: relative;
-      width: 100%;
-      height: 100vh; /* ビューポート高さ分 */
-      overflow: hidden;
-      background: #000; /* 背景黒 */
-    }
-    /* ▼ 16:9比率を維持しつつ、なるべく拡大する方法 (カバー的アプローチ) ▼ */
-    .video-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      /* 16:9を維持するための仕組み */
-      width: 177.78vh; /* 16/9 = 1.7778… → 高さ基準にして横幅を計算 */
-      height: 100vh;
-    }
-    /* 画面が横長の場合に高さ基準だと足りないことがあるので、メディアクエリで調整 */
-    @media (min-aspect-ratio: 16/9) {
-      .video-container {
-        width: 100vw;
-        height: 56.25vw; /* 9/16 = 0.5625 → 横幅基準にして高さを計算 */
-      }
-    }
-    #player {
-      width: 100%;
-      height: 100%;
-    }
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+#player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* 比率固定の代わりに常に100%表示 → 黒帯が出ることがある */
+}
+
 
     /* ▼ 通常コンテンツエリア ▼ */
     .content-section {
