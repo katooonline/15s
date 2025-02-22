@@ -62,6 +62,20 @@
       text-align: center;
       padding: 40px 20px;
     }
+    /* ソーシャルリンクエリア */
+    .social-links {
+      margin-bottom: 20px;
+    }
+    .social-links a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 1.1rem;
+      transition: opacity 0.2s;
+    }
+    .social-links a:hover {
+      opacity: 0.7;
+    }
     /* 説明テキストエリア */
     .description-placeholder p {
       margin-bottom: 1em;  /* 段落ごとに余白を追加 */
@@ -89,7 +103,15 @@
 
   <!-- 通常コンテンツエリア -->
   <section class="content-section">
-    <!-- 説明テキストエリア（プレースホルダー） -->
+    <!-- ソーシャルリンクエリア -->
+    <div class="social-links">
+      <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.tiktok.com/@15s_mov" target="_blank" rel="noopener noreferrer">TikTok</a>
+    </div>
+
+    <!-- 説明テキストエリア -->
     <div class="description-placeholder">
       <p>15秒のスナップを毎時間SNS投稿しています。<br>
       ここではそれらのビデオクリップをランダムで再生しています。</p>
@@ -103,32 +125,38 @@
     </div>
   </section>
 
-  <!-- YouTube IFrame API（スマホでは自動再生を無効にする場合は、playerVarsのautoplayを0に変更してください） -->
+  <!-- YouTube IFrame API -->
   <script>
-    function onYouTubeIframeAPIReady() {
-      var player = new YT.Player('player', {
-        videoId: 'rYnMVy4NChQ',
-        playerVars: {
-          autoplay: 1,  // スマホ向けならここを0にしても良い
-          controls: 1,
-          disablekb: 1,
-          fs: 1,
-          iv_load_policy: 3,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0
-        },
-        events: {
-          'onReady': function(event) {
-            event.target.mute(); // ミュートして自動再生を許可
+  function onYouTubeIframeAPIReady() {
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    var player = new YT.Player('player', {
+      videoId: 'rYnMVy4NChQ',
+      playerVars: {
+        autoplay: 1,
+        controls: 1,
+        disablekb: 1,
+        fs: 1,
+        iv_load_policy: 3,
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      },
+      events: {
+        'onReady': function(event) {
+          if (isMobile) {
+            event.target.mute(); // スマホではミュート
+          } else {
+            event.target.unMute(); // デスクトップでは音を出す
           }
         }
-      });
-    }
-  </script>
-  <script src="https://www.youtube.com/iframe_api"></script>
+      }
+    });
+  }
+</script>
+<script src="https://www.youtube.com/iframe_api"></script>
 
-  <!-- Google タグ (gtag.js) ※必要に応じて設定 -->
+
+  <!-- Google タグ (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
