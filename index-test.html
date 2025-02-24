@@ -141,36 +141,31 @@
   
   <!-- YouTube IFrame API -->
   <script>
-    function onYouTubeIframeAPIReady() {
-      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      var player = new YT.Player('player', {
-        videoId: 'rYnMVy4NChQ',
-        playerVars: {
-          autoplay: 1,
-          controls: 1,
-          disablekb: 1,
-          fs: 1,
-          iv_load_policy: 3,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0,
-          playsinline: 1
-        },
-        events: {
-          'onReady': function(event) {
-            if (isMobile) {
-              event.target.Mute(); // 音声オン
-              event.target.playVideo(); // 自動再生を試みる
-            } else {
-              event.target.Mute(); // 音声オン
-              event.target.playVideo(); // 自動再生を試みる
-            }
-          }
+  function onYouTubeIframeAPIReady() {
+    var player = new YT.Player('player', {
+      videoId: 'rYnMVy4NChQ',
+      playerVars: {
+        autoplay: 1,
+        controls: 1,
+        disablekb: 1,
+        fs: 1,
+        iv_load_policy: 3,
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0,
+        playsinline: 1
+      },
+      events: {
+        'onReady': function(event) {
+          event.target.mute();      // 常にミュートにする
+          event.target.playVideo(); // 自動再生を開始
         }
-      });
-    }
-  </script>
-  <script src="https://www.youtube.com/iframe_api"></script>
+      }
+    });
+  }
+</script>
+<script src="https://www.youtube.com/iframe_api"></script>
+
   
   <!-- Google タグ (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV"></script>
