@@ -12,7 +12,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { font-family: sans-serif; background-color: #000; }
 
-    /* 全画面動画セクション：16:9比率の letterbox 表示 */
+    /* 全画面動画セクション */
     .video-section {
       width: 100%;
       height: 100vh;
@@ -34,20 +34,26 @@
       text-align: center;
       padding: 40px 20px;
     }
+    /* タイトル：アイコン＋テキスト */
     .title {
-      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      font-size: 1rem;       /* タイトル文字サイズ */
       font-weight: bold;
-      margin-bottom: 1em; /* 説明部分との間に余白 */
+      margin-bottom: 1em;    /* 説明部分との間に余白 */
     }
+    .title img {
+      width: 28px;
+      height: 28px;
+      margin-right: 8px;   /* アイコンとテキストの間に隙間 */
+    }
+    /* 説明テキスト */
     .description-placeholder {
       font-size: 0.8rem;
       margin-bottom: 1em;
-    }
-    .description-placeholder p {
-      margin-bottom: 1em;
       line-height: 1.5;
-      padding: 12px 24px;
     }
+    /* ソーシャルリンク */
     .social-links {
       margin-bottom: 20px;
       font-size: 0.8rem;
@@ -67,6 +73,7 @@
       background-color: #777;
       transform: scale(1.05);
     }
+    /* フッター */
     .footer {
       margin-top: 40px;
       font-size: 0.8rem;
@@ -80,7 +87,6 @@
     @media (max-width: 768px) {
       .video-section {
         height: 50vh;
-        /* pointer-events を削除し、タップ操作を有効に */
       }
     }
   </style>
@@ -93,14 +99,19 @@
   
   <!-- 通常コンテンツエリア -->
   <section class="content-section">
-    <!-- タイトル -->
-    <div class="title">15s</div>
+    <!-- タイトル：アイコン＋テキスト -->
+    <div class="title">
+      <img src="15s.svg" alt="15s logo">
+      15s
+    </div>
     
     <!-- 説明テキストエリア -->
     <div class="description-placeholder">
       <p>
         15秒のスナップを毎時間SNS投稿しています。<br>
-        ここではそれらのビデオクリップをランダムで再生しています。<br>
+        ここではそれらのビデオクリップをランダムで再生しています。
+      </p>
+      <p>
         I post a 15-second video snap on social media every hour.<br>
         Here, these video snaps are played in random order.
       </p>
@@ -139,11 +150,10 @@
         events: {
           'onReady': function(event) {
             if (isMobile) {
-              event.target.unmute(); // スマホは音声オンを試みる
-              event.target.playVideo(); // 自動再生の試行
+              event.target.mute(); // スマホはミュート
             } else {
-              event.target.unMute(); // デスクトップは音声オンを試みる
-              event.target.playVideo(); // 自動再生の試行
+              event.target.unMute(); // デスクトップは音声オン
+              event.target.playVideo(); // 自動再生を試みる
             }
           }
         }
