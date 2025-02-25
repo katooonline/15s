@@ -1,179 +1,414 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>15s</title>
+  <title>15s - Random Video Snap Live Stream</title>
   <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
   <meta property="og:image" content="https://15s.mov/15s.jpg" />
+  <meta property="og:title" content="15s - Random Video Snap Live Stream" />
+  <meta property="og:description" content="Random Video Snap Live Stream by Takafumi Kato" />
+  <meta property="og:url" content="https://15s.mov/" />
+  <meta property="og:type" content="website" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@15s_mov" />
+  <meta name="twitter:title" content="15s" />
+  <meta name="twitter:description" content="Random Video Snap Live Stream by Takafumi Kato" />
+  <meta name="twitter:image" content="https://15s.mov/15s.jpg" />
+  
+  <!-- Favicon -->
+  <link rel="icon" href="15s.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="15s.jpg">
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" href="15s.svg" as="image" type="image/svg+xml">
+  
+  <!-- CSS -->
   <style>
     /* Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { font-family: sans-serif; background-color: #000; }
+    
+    /* Variables for theming */
+    :root {
+      --bg-color: #000;
+      --content-bg: #333333;
+      --text-color: #fff;
+      --button-bg: #555;
+      --button-hover-bg: #777;
+      --accent-color: #4d90fe;
+    }
+    
+    /* Dark mode preference support */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-color: #f5f5f5;
+        --content-bg: #e0e0e0;
+        --text-color: #333;
+        --button-bg: #4d90fe;
+        --button-hover-bg: #357ae8;
+      }
+    }
+    
+    html, body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    /* Accessibility - focus states */
+    :focus {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 2px;
+    }
 
     /* 全画面動画セクション */
     .video-section {
       width: 100%;
       height: 100vh;
       position: relative;
-      background: #000;
+      background: var(--bg-color);
       overflow: hidden;
     }
+    
     /* iframe を全体に広げ、object-fit: contain で映像全体を表示 */
     #player {
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
+    
+    /* ミュート解除ボタン */
+    .mute-toggle {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.3s ease;
+    }
+    
+    .mute-toggle:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+    
+    .mute-toggle svg {
+      width: 24px;
+      height: 24px;
+    }
 
     /* 通常コンテンツエリア */
     .content-section {
-      background-color: #333333;
-      color: #fff;
+      background-color: var(--content-bg);
+      color: var(--text-color);
       text-align: center;
       padding: 40px 20px;
     }
+    
     /* タイトル：アイコン＋テキスト */
     .title {
       display: inline-flex;
       align-items: center;
-      font-size: 1rem;       /* タイトル文字サイズ */
+      font-size: 1.5rem;
       font-weight: bold;
-      margin-bottom: 1em;    /* 説明部分との間に余白 */
+      margin-bottom: 1em;
     }
+    
     .title img {
-      width: 28px;
-      height: 28px;
-      margin-right: 8px;   /* アイコンとテキストの間に隙間 */
+      width: 36px;
+      height: 36px;
+      margin-right: 12px;
     }
+    
+    /* 見出し */
+    h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5em;
+    }
+    
+    h2 {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 1.5em 0 0.5em;
+    }
+    
     /* 説明テキスト */
-    .description-placeholder {
-      font-size: 0.8rem;
-      line-height: 1.5;
+    .description {
+      max-width: 600px;
+      margin: 0 auto 2em;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    
+    .description p {
       margin-bottom: 1em;
     }
-    .description-placeholder p {
-      margin-bottom: 1em;
-    }
-    /* 英文の上部余白を通常より狭くする */
-    .description-placeholder p.english {
-      margin-top: 0.5em;
-    }
+    
     /* ソーシャルリンク */
     .social-links {
-      margin-top: 20px;
-      margin-bottom: 20px;
-      font-size: 0.8rem;
+      margin: 30px 0;
     }
+    
     .social-links a {
       display: inline-block;
-      padding: 8px 16px;
-      background-color: #555;
+      padding: 10px 20px;
+      background-color: var(--button-bg);
       border: none;
-      border-radius: 4px;
-      color: #fff;
+      border-radius: 6px;
+      color: var(--text-color);
       text-decoration: none;
-      margin: 5px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
     }
+    
     .social-links a:hover {
-      background-color: #777;
-      transform: scale(1.05);
+      background-color: var(--button-hover-bg);
+      transform: translateY(-2px);
     }
+    
     /* フッター */
-    .footer {
+    .site-footer {
       margin-top: 40px;
-      font-size: 0.8rem;
+      padding: 20px;
+      font-size: 0.9rem;
     }
-    .footer a {
-      color: #fff;
+    
+    .site-footer a {
+      color: var(--text-color);
       text-decoration: underline;
+      transition: opacity 0.3s;
+    }
+    
+    .site-footer a:hover {
+      opacity: 0.8;
     }
 
-    /* スマホ向け調整：動画セクションの高さを縮小 */
+    /* スマホ向け調整 */
     @media (max-width: 768px) {
       .video-section {
-        height: 50vh;
+        height: 60vh; /* 少し大きくする */
       }
+      
+      .title {
+        font-size: 1.3rem;
+      }
+      
+      .title img {
+        width: 28px;
+        height: 28px;
+      }
+      
+      .social-links a {
+        padding: 8px 16px;
+        margin: 4px;
+        font-size: 0.9rem;
+      }
+    }
+    
+    /* アニメーション */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
     }
   </style>
 </head>
 <body>
-  <!-- 全画面動画セクション -->
-  <section class="video-section">
-    <div id="player"></div>
-  </section>
-  
-  <!-- 通常コンテンツエリア -->
-  <section class="content-section">
-    <!-- タイトル：アイコン＋テキスト -->
-    <div class="title">
-      <img src="15s.svg" alt="15s logo">
-      15s
-    </div>
-    
-    <!-- 説明テキストエリア -->
-    <div class="description-placeholder">
-      <p>
-        Each clip is a 15‑second video.<br>
-        Every hour, a new clip is uploaded to social media.<br>
-        On this page, clips are played randomly.
-      </p>
-    </div>
-    
-    <!-- ソーシャルリンクエリア -->
-    <div class="social-links">
-      <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer">X</a>
-      <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer">Instagram</a>
-    </div>
-
-   <!-- SnapWidget -->
-<script src="https://snapwidget.com/js/snapwidget.js"></script>
-<iframe src="https://snapwidget.com/embed/1089393" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;  width:100%; " title="Posts from Instagram"></iframe>
-    
-    <!-- フッターエリア -->
-    <div class="footer">
-      <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a>
-    </div>
-  </section>
-  
-  <!-- YouTube IFrame API -->
-  <script>
-  function onYouTubeIframeAPIReady() {
-    var player = new YT.Player('player', {
-      videoId: 'rYnMVy4NChQ',
-      playerVars: {
-        autoplay: 1,
-        controls: 1,
-        disablekb: 1,
-        fs: 1,
-        iv_load_policy: 3,
-        modestbranding: 1,
-        rel: 0,
-        showinfo: 0,
-        playsinline: 1
-      },
-      events: {
-        'onReady': function(event) {
-          event.target.mute();      // 常にミュートにする
-          event.target.playVideo(); // 自動再生を開始
-        }
-      }
-    });
+  <!-- 構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "15s",
+    "url": "https://15s.mov/",
+    "description": "Random Video Snap Live Stream by Takafumi Kato",
+    "author": {
+      "@type": "Person",
+      "name": "Kato Takafumi",
+      "url": "https://katooonline.com"
+    }
   }
-</script>
-<script src="https://www.youtube.com/iframe_api"></script>
+  </script>
 
+  <main>
+    <!-- 全画面動画セクション -->
+    <section class="video-section" aria-label="Random video player">
+      <div id="player-container">
+        <div id="player"></div>
+      </div>
+      <button class="mute-toggle" id="muteToggle" aria-label="Toggle sound">
+        <svg id="muteIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </button>
+    </section>
+    
+    <!-- 通常コンテンツエリア -->
+    <section class="content-section fade-in">
+      <!-- タイトル：アイコン＋テキスト -->
+      <h1 class="title">
+        <img src="15s.svg" alt="15s logo">
+        15s
+      </h1>
+      
+      <!-- 説明テキストエリア -->
+      <div class="description">
+        <p>
+          Each clip is a 15‑second video.<br>
+          Every hour, a new clip is uploaded to social media.<br>
+          On this page, clips are played randomly.<br>
+          This is a personal video project.
+        </p>
+      </div>
+      
+      <!-- ソーシャルリンクエリア -->
+      <h2>Follow 15s</h2>
+      <div class="social-links">
+        <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram">
+          Instagram
+        </a>
+        <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Follow on Twitter">
+          Twitter
+        </a>
+        <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer" aria-label="Subscribe on YouTube">
+          YouTube
+        </a>
+      </div>
+    </section>
+  </main>
   
-  <!-- Google タグ (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV"></script>
+  <!-- フッターエリア -->
+  <footer class="site-footer">
+    <p>Created by <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a></p>
+  </footer>
+
+  <!-- YouTube IFrame API - 遅延読み込み -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-3LJ8BTZGZV');
+    // YouTubeプレーヤーの変数
+    let ytPlayer;
+    let isMuted = true;
+    
+    // ページ読み込み完了時に実行
+    document.addEventListener('DOMContentLoaded', function() {
+      // YouTube APIを遅延読み込み
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      
+      // ミュートボタンのイベントリスナー
+      const muteToggle = document.getElementById('muteToggle');
+      muteToggle.addEventListener('click', toggleMute);
+    });
+    
+    // YouTube APIのコールバック関数
+    function onYouTubeIframeAPIReady() {
+      // ランダムな動画を選択する関数（本番環境では実際のリストから選択）
+      const videos = [
+        'rYnMVy4NChQ', // 元のコードから取得した動画ID
+        // 他の動画IDも追加可能
+      ];
+      const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+      
+      ytPlayer = new YT.Player('player', {
+        videoId: randomVideo,
+        playerVars: {
+          autoplay: 1,
+          controls: 1,
+          disablekb: 1,
+          fs: 1,
+          iv_load_policy: 3,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          playsinline: 1
+        },
+        events: {
+          'onReady': function(event) {
+            event.target.mute();      // 初期状態はミュート
+            event.target.playVideo(); // 自動再生を開始
+            updateMuteButtonIcon();   // ミュートボタンのアイコンを更新
+          },
+          'onStateChange': function(event) {
+            // 動画が終了したら次のランダム動画を再生
+            if (event.data === YT.PlayerState.ENDED) {
+              const nextVideo = videos[Math.floor(Math.random() * videos.length)];
+              ytPlayer.loadVideoById(nextVideo);
+            }
+          }
+        }
+      });
+    }
+    
+    // ミュートトグル関数
+    function toggleMute() {
+      if (ytPlayer) {
+        if (isMuted) {
+          ytPlayer.unMute();
+          isMuted = false;
+        } else {
+          ytPlayer.mute();
+          isMuted = true;
+        }
+        updateMuteButtonIcon();
+      }
+    }
+    
+    // ミュートボタンのアイコンを更新
+    function updateMuteButtonIcon() {
+      const muteIcon = document.getElementById('muteIcon');
+      if (isMuted) {
+        // ミュート中のアイコン
+        muteIcon.innerHTML = `
+          <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        `;
+      } else {
+        // ミュート解除中のアイコン
+        muteIcon.innerHTML = `
+          <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        `;
+      }
+    }
+  </script>
+  
+  <!-- Google タグ (gtag.js) - 遅延読み込み -->
+  <script>
+    // アナリティクスを遅延読み込み
+    window.addEventListener('load', function() {
+      // Googleタグマネージャーのスクリプトを動的に作成
+      const gtagScript = document.createElement('script');
+      gtagScript.async = true;
+      gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV";
+      document.head.appendChild(gtagScript);
+      
+      // Googleアナリティクスの設定
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-3LJ8BTZGZV', {
+        'anonymize_ip': true,
+        'cookie_flags': 'SameSite=None;Secure'
+      });
+    });
   </script>
 </body>
 </html>
