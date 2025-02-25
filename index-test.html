@@ -54,6 +54,8 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
+      height: 100%;
+      overflow: hidden;
     }
     
     /* Accessibility - focus states */
@@ -69,13 +71,28 @@
       position: relative;
       background: var(--bg-color);
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     
-    /* iframe を全体に広げ、object-fit: contain で映像全体を表示 */
-    #player {
+    /* プレーヤーコンテナ - フル幅・高さを確保 */
+    #player-container {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    /* iframe を全体に広げる修正 */
+    #player {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
     
     /* ミュート解除ボタン */
@@ -112,6 +129,8 @@
       color: var(--text-color);
       text-align: center;
       padding: 40px 20px;
+      height: 100vh;
+      overflow-y: auto;
     }
     
     /* タイトル：アイコン＋テキスト */
@@ -200,6 +219,10 @@
         height: 60vh; /* 少し大きくする */
       }
       
+      .content-section {
+        height: auto;
+      }
+      
       .title {
         font-size: 1.3rem;
       }
@@ -224,6 +247,18 @@
     
     .fade-in {
       animation: fadeIn 1s ease-in-out;
+    }
+    
+    /* YouTube iframe APIの初期読み込みのための全画面表示 */
+    main {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    
+    #main-content {
+      flex: 1;
+      overflow-y: auto;
     }
   </style>
 </head>
@@ -259,44 +294,46 @@
       </button>
     </section>
     
-    <!-- 通常コンテンツエリア -->
-    <section class="content-section fade-in">
-      <!-- タイトル：アイコン＋テキスト -->
-      <h1 class="title">
-        <img src="15s.svg" alt="15s logo">
-        15s
-      </h1>
-      
-      <!-- 説明テキストエリア -->
-      <div class="description">
-        <p>
-          Each clip is a 15‑second video.<br>
-          Every hour, a new clip is uploaded to social media.<br>
-          On this page, clips are played randomly.<br>
-          This is a personal video project.
-        </p>
-      </div>
-      
-      <!-- ソーシャルリンクエリア -->
-      <h2>Follow 15s</h2>
-      <div class="social-links">
-        <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram">
-          Instagram
-        </a>
-        <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Follow on Twitter">
-          Twitter
-        </a>
-        <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer" aria-label="Subscribe on YouTube">
-          YouTube
-        </a>
-      </div>
-    </section>
+    <div id="main-content">
+      <!-- 通常コンテンツエリア -->
+      <section class="content-section fade-in">
+        <!-- タイトル：アイコン＋テキスト -->
+        <h1 class="title">
+          <img src="15s.svg" alt="15s logo">
+          15s
+        </h1>
+        
+        <!-- 説明テキストエリア -->
+        <div class="description">
+          <p>
+            Each clip is a 15‑second video.<br>
+            Every hour, a new clip is uploaded to social media.<br>
+            On this page, clips are played randomly.<br>
+            This is a personal video project.
+          </p>
+        </div>
+        
+        <!-- ソーシャルリンクエリア -->
+        <h2>Follow 15s</h2>
+        <div class="social-links">
+          <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram">
+            Instagram
+          </a>
+          <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Follow on Twitter">
+            Twitter
+          </a>
+          <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer" aria-label="Subscribe on YouTube">
+            YouTube
+          </a>
+        </div>
+        
+        <!-- フッターエリア -->
+        <footer class="site-footer">
+          <p>Created by <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a></p>
+        </footer>
+      </section>
+    </div>
   </main>
-  
-  <!-- フッターエリア -->
-  <footer class="site-footer">
-    <p>Created by <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a></p>
-  </footer>
 
   <!-- YouTube IFrame API - 遅延読み込み -->
   <script>
@@ -351,6 +388,9 @@
               const nextVideo = videos[Math.floor(Math.random() * videos.length)];
               ytPlayer.loadVideoById(nextVideo);
             }
+          },
+          'onError': function(event) {
+            console.error('YouTube Player Error:', event.data);
           }
         }
       });
