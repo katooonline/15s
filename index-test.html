@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <title>15s - Random Video Snap Live Stream</title>
@@ -16,50 +16,25 @@
   <meta name="twitter:description" content="Random Video Snap Live Stream by Takafumi Kato" />
   <meta name="twitter:image" content="https://15s.mov/15s.jpg" />
   
-  <!-- Favicon -->
+  <!-- ファビコン -->
   <link rel="icon" href="15s.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="15s.jpg">
   
-  <!-- Preload critical assets -->
-  <link rel="preload" href="15s.svg" as="image" type="image/svg+xml">
-  
-  <!-- CSS -->
   <style>
-    /* Reset */
+    /* リセット */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    /* Variables for theming */
-    :root {
-      --bg-color: #000;
-      --content-bg: #333333;
-      --text-color: #fff;
-      --button-bg: #555;
-      --button-hover-bg: #777;
-      --accent-color: #4d90fe;
-    }
-    
-    /* Dark mode preference support */
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg-color: #f5f5f5;
-        --content-bg: #e0e0e0;
-        --text-color: #333;
-        --button-bg: #4d90fe;
-        --button-hover-bg: #357ae8;
-      }
-    }
-    
+    /* 基本スタイル */
     html, body { 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #000;
+      color: #fff;
       line-height: 1.6;
-      height: 100%;
     }
     
-    /* Accessibility - focus states */
+    /* アクセシビリティ - フォーカス状態 */
     :focus {
-      outline: 2px solid var(--accent-color);
+      outline: 2px solid #4d90fe;
       outline-offset: 2px;
     }
 
@@ -68,33 +43,18 @@
       width: 100%;
       height: 100vh;
       position: relative;
-      background: var(--bg-color);
+      background: #000;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
     
-    /* プレーヤーコンテナ - フル幅・高さを確保 */
+    /* プレーヤーコンテナ */
     #player-container {
       width: 100%;
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       position: relative;
     }
     
-    /* iframe を全体に広げる修正 */
-    #player {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    
-    /* ミュート解除ボタン */
+    /* ミュートボタン */
     .mute-toggle {
       position: absolute;
       bottom: 20px;
@@ -117,22 +77,15 @@
       background: rgba(0, 0, 0, 0.8);
     }
     
-    .mute-toggle svg {
-      width: 24px;
-      height: 24px;
-    }
-
-    /* 通常コンテンツエリア */
+    /* コンテンツセクション */
     .content-section {
-      background-color: var(--content-bg);
-      color: var(--text-color);
+      background-color: #333;
+      color: #fff;
       text-align: center;
       padding: 40px 20px;
-      height: 100vh;
-      overflow-y: auto;
     }
     
-    /* タイトル：アイコン＋テキスト */
+    /* タイトル */
     .title {
       display: inline-flex;
       align-items: center;
@@ -147,29 +100,12 @@
       margin-right: 12px;
     }
     
-    /* 見出し */
-    h1 {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 0.5em;
-    }
-    
-    h2 {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin: 1.5em 0 0.5em;
-    }
-    
     /* 説明テキスト */
     .description {
       max-width: 600px;
       margin: 0 auto 2em;
       font-size: 1rem;
       line-height: 1.7;
-    }
-    
-    .description p {
-      margin-bottom: 1em;
     }
     
     /* ソーシャルリンク */
@@ -180,50 +116,39 @@
     .social-links a {
       display: inline-block;
       padding: 10px 20px;
-      background-color: var(--button-bg);
+      background-color: #555;
       border: none;
       border-radius: 6px;
-      color: var(--text-color);
+      color: #fff;
       text-decoration: none;
       margin: 8px;
       transition: all 0.3s ease;
-      font-weight: 500;
     }
     
     .social-links a:hover {
-      background-color: var(--button-hover-bg);
+      background-color: #777;
       transform: translateY(-2px);
     }
     
     /* フッター */
-    .site-footer {
+    .footer {
       margin-top: 40px;
-      padding: 20px;
       font-size: 0.9rem;
     }
     
-    .site-footer a {
-      color: var(--text-color);
+    .footer a {
+      color: #fff;
       text-decoration: underline;
-      transition: opacity 0.3s;
-    }
-    
-    .site-footer a:hover {
-      opacity: 0.8;
     }
 
     /* スマホ向け調整 */
     @media (max-width: 768px) {
       .video-section {
-        height: 60vh; /* 少し大きくする */
-      }
-      
-      .content-section {
-        height: auto;
+        height: 50vh;
       }
       
       .title {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
       }
       
       .title img {
@@ -234,120 +159,63 @@
       .social-links a {
         padding: 8px 16px;
         margin: 4px;
-        font-size: 0.9rem;
       }
-    }
-    
-    /* アニメーション */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .fade-in {
-      animation: fadeIn 1s ease-in-out;
-    }
-    
-    /* YouTube iframe APIの初期読み込みのための全画面表示 */
-    main {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    
-    #main-content {
-      flex: 1;
-      overflow-y: auto;
     }
   </style>
 </head>
 <body>
-  <!-- 構造化データ -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "15s",
-    "url": "https://15s.mov/",
-    "description": "Random Video Snap Live Stream by Takafumi Kato",
-    "author": {
-      "@type": "Person",
-      "name": "Kato Takafumi",
-      "url": "https://katooonline.com"
-    }
-  }
-  </script>
-
-  <main>
-    <!-- 全画面動画セクション -->
-    <section class="video-section" aria-label="Random video player">
-      <div id="player-container">
-        <div id="player"></div>
-      </div>
-      <button class="mute-toggle" id="muteToggle" aria-label="Toggle sound">
-        <svg id="muteIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-          <line x1="23" y1="9" x2="17" y2="15"></line>
-          <line x1="17" y1="9" x2="23" y2="15"></line>
-        </svg>
-      </button>
-    </section>
-    
-    <div id="main-content">
-      <!-- 通常コンテンツエリア -->
-      <section class="content-section fade-in">
-        <!-- タイトル：アイコン＋テキスト -->
-        <h1 class="title">
-          <img src="15s.svg" alt="15s logo">
-          15s
-        </h1>
-        
-        <!-- 説明テキストエリア -->
-        <div class="description">
-          <p>
-            Each clip is a 15‑second video.<br>
-            Every hour, a new clip is uploaded to social media.<br>
-            On this page, clips are played randomly.<br>
-            This is a personal video project.
-          </p>
-        </div>
-        
-        <!-- ソーシャルリンクエリア -->
-        <h2>Follow 15s</h2>
-        <div class="social-links">
-          <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram">
-            Instagram
-          </a>
-          <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Follow on Twitter">
-            Twitter
-          </a>
-          <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer" aria-label="Subscribe on YouTube">
-            YouTube
-          </a>
-        </div>
-        
-        <!-- フッターエリア -->
-        <footer class="site-footer">
-          <p>Created by <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a></p>
-        </footer>
-      </section>
+  <section class="video-section" aria-label="ランダムビデオプレーヤー">
+    <div id="player-container">
+      <div id="player"></div>
     </div>
-  </main>
+    <button class="mute-toggle" id="muteToggle" aria-label="音声のオン/オフを切り替える">
+      <svg id="muteIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
+    </button>
+  </section>
+  
+  <section class="content-section">
+    <div class="title">
+      <img src="15s.svg" alt="15sロゴ">
+      15s
+    </div>
+    
+    <div class="description">
+      <p>
+        Each clip is a 15‑second video.<br>
+        Every hour, a new clip is uploaded to social media.<br>
+        On this page, clips are played randomly.<br>
+        This is a personal video project.
+      </p>
+    </div>
+    
+    <div class="social-links">
+      <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Instagramでフォローする">
+        Instagram
+      </a>
+      <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Twitterでフォローする">
+        Twitter
+      </a>
+      <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer" aria-label="YouTubeでチャンネル登録する">
+        YouTube
+      </a>
+    </div>
+    
+    <div class="footer">
+      <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a>
+    </div>
+  </section>
 
-  <!-- YouTube IFrame API - 遅延読み込み -->
   <script>
-    // YouTubeプレーヤーの変数
+    // YouTubeプレーヤー変数
     let ytPlayer;
     let isMuted = true;
     
     // ページ読み込み完了時に実行
     document.addEventListener('DOMContentLoaded', function() {
-      // YouTube APIを遅延読み込み
-      const tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      
       // ミュートボタンのイベントリスナー
       const muteToggle = document.getElementById('muteToggle');
       muteToggle.addEventListener('click', toggleMute);
@@ -355,9 +223,9 @@
     
     // YouTube APIのコールバック関数
     function onYouTubeIframeAPIReady() {
-      // ランダムな動画を選択する関数（本番環境では実際のリストから選択）
+      // ランダムな動画を選択する関数
       const videos = [
-        'rYnMVy4NChQ', // 元のコードから取得した動画ID
+        'rYnMVy4NChQ', 
         // 他の動画IDも追加可能
       ];
       const randomVideo = videos[Math.floor(Math.random() * videos.length)];
@@ -377,9 +245,9 @@
         },
         events: {
           'onReady': function(event) {
-            event.target.mute();      // 初期状態はミュート
-            event.target.playVideo(); // 自動再生を開始
-            updateMuteButtonIcon();   // ミュートボタンのアイコンを更新
+            event.target.mute();
+            event.target.playVideo();
+            updateMuteButtonIcon();
           },
           'onStateChange': function(event) {
             // 動画が終了したら次のランダム動画を再生
@@ -413,14 +281,12 @@
     function updateMuteButtonIcon() {
       const muteIcon = document.getElementById('muteIcon');
       if (isMuted) {
-        // ミュート中のアイコン
         muteIcon.innerHTML = `
           <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
           <line x1="23" y1="9" x2="17" y2="15"></line>
           <line x1="17" y1="9" x2="23" y2="15"></line>
         `;
       } else {
-        // ミュート解除中のアイコン
         muteIcon.innerHTML = `
           <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
           <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -429,24 +295,21 @@
     }
   </script>
   
-  <!-- Google タグ (gtag.js) - 遅延読み込み -->
+  <!-- YouTube IFrame API - 遅延読み込み -->
+  <script async src="https://www.youtube.com/iframe_api"></script>
+  
+  <!-- Google Analytics - 遅延読み込み -->
   <script>
-    // アナリティクスを遅延読み込み
     window.addEventListener('load', function() {
-      // Googleタグマネージャーのスクリプトを動的に作成
       const gtagScript = document.createElement('script');
       gtagScript.async = true;
       gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV";
       document.head.appendChild(gtagScript);
       
-      // Googleアナリティクスの設定
       window.dataLayer = window.dataLayer || [];
       function gtag(){ dataLayer.push(arguments); }
       gtag('js', new Date());
-      gtag('config', 'G-3LJ8BTZGZV', {
-        'anonymize_ip': true,
-        'cookie_flags': 'SameSite=None;Secure'
-      });
+      gtag('config', 'G-3LJ8BTZGZV');
     });
   </script>
 </body>
