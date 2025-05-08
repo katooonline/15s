@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>15s</title>
+  <meta name="description" content="Random Video Snap Live Stream by Takafumi Kato" />
+  <meta property="og:image" content="https://15s.mov/15s.jpg" />
+  <meta property="og:title" content="15s - Random Video Snap Live Stream" />
+  <meta property="og:description" content="Random Video Snap Live Stream by Takafumi Kato" />
+  <meta property="og:url" content="https://15s.mov/" />
+  <meta property="og:type" content="website" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@15s_mov" />
+  <meta name="twitter:title" content="15s" />
+  <meta name="twitter:description" content="Random Video Snap Live Stream by Takafumi Kato" />
+  <meta name="twitter:image" content="https://15s.mov/15s.jpg" />
+  
+  <!-- ファビコン -->
+  <link rel="icon" href="favicon.ico" type="image">
+  <link rel="apple-touch-icon" href="favicon.ico">
+  
+  <style>
+    /* リセット */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* 基本スタイル */
+    html, body { 
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #000;
+      color: #fff;
+      line-height: 1.6;
+    }
+    
+    /* アクセシビリティ - フォーカス状態 */
+    :focus {
+      outline: 2px solid #4d90fe;
+      outline-offset: 2px;
+    }
+
+    /* 全画面動画セクション */
+    .video-section {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      background: #000;
+      overflow: hidden;
+    }
+    
+    /* YouTube埋め込み - 重要な部分 */
+    #player {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    /* コンテンツセクション */
+    .content-section {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    /* タイトル */
+    .title {
+      display: inline-flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1em;
+    }
+    
+    .title img {
+      width: 36px;
+      height: 36px;
+      margin-right: 12px;
+    }
+    
+    /* 説明テキスト */
+    .description {
+      max-width: 600px;
+      margin: 0 auto 2em;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    
+    /* ソーシャルリンク */
+    .social-links {
+      margin: 30px 0;
+    }
+    
+    .social-links a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #555;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      text-decoration: none;
+      margin: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background-color: #777;
+      transform: translateY(-2px);
+    }
+    
+    /* フッター */
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+    
+    .footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* スマホ向け調整 */
+    @media (max-width: 768px) {
+      .video-section {
+        height: 50vh;
+      }
+      
+      .title {
+        font-size: 1.2rem;
+      }
+      
+      .title img {
+        width: 28px;
+        height: 28px;
+      }
+      
+      .social-links a {
+        padding: 8px 16px;
+        margin: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="video-section" aria-label="ランダムビデオプレーヤー">
+    <div id="player"></div>
+  </section>
+  
+  <section class="content-section">
+    <div class="title">
+      <img src="15s.svg" alt="15sロゴ">
+      15s
+    </div>
+    
+    <div class="description">
+      <p>
+        Each clip is a 15‑second video.<br>
+        Every hour, a new clip is uploaded to social media.<br>
+        On this page, clips are played randomly.<br>
+        This is a personal video project.
+      </p>
+    </div>
+    
+    <div class="social-links">
+      <a href="https://www.instagram.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Instagramでフォローする">
+        Instagram
+      </a>
+      <a href="https://twitter.com/15s_mov" target="_blank" rel="noopener noreferrer" aria-label="Twitterでフォローする">
+        Twitter
+      </a>
+      <a href="https://www.youtube.com/@15seconds" target="_blank" rel="noopener noreferrer" aria-label="YouTubeでチャンネル登録する">
+        YouTube
+      </a>
+    </div>
+    
+    <div class="footer">
+      <a href="https://katooonline.com" target="_blank" rel="noopener noreferrer">Kato Takafumi</a>
+    </div>
+  </section>
+
+  <script>
+    // シンプル化したYouTube Player初期化
+    function onYouTubeIframeAPIReady() {
+      new YT.Player('player', {
+        videoId: 'rYnMVy4NChQ',
+        playerVars: {
+          autoplay: 1,
+          controls: 1,
+          disablekb: 1,
+          fs: 1,
+          iv_load_policy: 3,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          playsinline: 1
+        },
+        width: '100%',
+        height: '100%'
+      });
+    }
+  </script>
+  
+  <!-- YouTube IFrame API -->
+  <script async src="https://www.youtube.com/iframe_api"></script>
+  
+  <!-- Google Analytics - 遅延読み込み -->
+  <script>
+    window.addEventListener('load', function() {
+      const gtagScript = document.createElement('script');
+      gtagScript.async = true;
+      gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-3LJ8BTZGZV";
+      document.head.appendChild(gtagScript);
+      
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-3LJ8BTZGZV');
+    });
+  </script>
+</body>
+</html>
